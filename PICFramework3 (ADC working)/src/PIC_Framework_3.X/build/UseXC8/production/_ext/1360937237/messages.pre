@@ -5916,12 +5916,14 @@ int in_low_int(void);
 
 int in_main(void);
 
+unsigned char adcbuffer[28];
+
 # 10 "../src/messages.h"
 typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[10];
+unsigned char data[28];
 } msg;
 
 typedef struct __msg_queue {

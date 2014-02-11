@@ -4647,13 +4647,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interrupts.h: 16: int low_int_active(void);
 [; ;interrupts.h: 18: int in_low_int(void);
 [; ;interrupts.h: 21: int in_main(void);
+"23 ../src/interrupts.h
+[v _adcbuffer `uc ~T0 @X0 -> 28 `i e ]
+[; ;interrupts.h: 23: unsigned char adcbuffer[28];
 [; ;user_interrupts.h: 10: void timer0_int_handler(unsigned char *);
 [; ;user_interrupts.h: 12: void timer1_int_handler(unsigned char *);
+[; ;user_interrupts.h: 14: void adc_int_handler(unsigned char *);
 [; ;messages.h: 10: typedef struct __msg {
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[10];
+[; ;messages.h: 14: unsigned char data[28];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
 [; ;messages.h: 18: msg queue[4];
@@ -4678,13 +4682,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.h: 15: void init_uart_recv(uart_comm *);
 [; ;my_uart.h: 16: void uart_recv_int_handler(void);
 [; ;my_i2c.h: 7: typedef struct __i2c_comm {
-[; ;my_i2c.h: 8: unsigned char buffer[10];
+[; ;my_i2c.h: 8: unsigned char buffer[28];
 [; ;my_i2c.h: 9: unsigned char buflen;
 [; ;my_i2c.h: 10: unsigned char event_count;
 [; ;my_i2c.h: 11: unsigned char status;
 [; ;my_i2c.h: 12: unsigned char error_code;
 [; ;my_i2c.h: 13: unsigned char error_count;
-[; ;my_i2c.h: 14: unsigned char outbuffer[10];
+[; ;my_i2c.h: 14: unsigned char outbuffer[28];
 [; ;my_i2c.h: 15: unsigned char outbuflen;
 [; ;my_i2c.h: 16: unsigned char outbufind;
 [; ;my_i2c.h: 17: unsigned char slave_addr;
@@ -4696,10 +4700,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_i2c.h: 36: void i2c_configure_master(unsigned char);
 [; ;my_i2c.h: 37: unsigned char i2c_master_send(unsigned char,unsigned char *);
 [; ;my_i2c.h: 38: unsigned char i2c_master_recv(unsigned char);
-"6 ../src/interrupts.c
-[v _adcbuffer `uc ~T0 @X0 -> 10 `i s ]
-[; ;interrupts.c: 6: static unsigned char adcbuffer[10];
-"16
+"16 ../src/interrupts.c
 [v _enable_interrupts `(v ~T0 @X0 1 ef ]
 {
 [; ;interrupts.c: 16: void enable_interrupts() {
@@ -4822,9 +4823,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "48
 [e :UE 593 ]
 }
-[v F5104 `(v ~T0 @X0 1 tf ]
+[v F5106 `(v ~T0 @X0 1 tf ]
 "85
-[v _InterruptHandlerHigh `IF5104 ~T0 @X0 1 e ]
+[v _InterruptHandlerHigh `IF5106 ~T0 @X0 1 e ]
 {
 [; ;interrupts.c: 80: interrupt
 [; ;interrupts.c: 85: void InterruptHandlerHigh() {
@@ -4844,70 +4845,87 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 597 ]
 [; ;interrupts.c: 95: }
-[; ;interrupts.c: 98: if (INTCONbits.TMR0IF) {
-"98
-[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 598  ]
+[; ;interrupts.c: 97: if(PIR1bits.ADIF){
+"97
+[e $ ! != -> . . _PIR1bits 0 6 `i -> -> -> 0 `i `Vuc `i 598  ]
 {
-[; ;interrupts.c: 99: INTCONbits.TMR0IF = 0;
+[; ;interrupts.c: 99: PIR1bits.ADIF = 0;
 "99
-[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
-[; ;interrupts.c: 101: LATBbits.LATB0 = 1;
+[e = . . _PIR1bits 0 6 -> -> 0 `i `uc ]
+[; ;interrupts.c: 100: LATBbits.LATB1 = 1;
+"100
+[e = . . _LATBbits 0 1 -> -> 1 `i `uc ]
+[; ;interrupts.c: 101: LATBbits.LATB1 = 0;
 "101
-[e = . . _LATBbits 0 0 -> -> 1 `i `uc ]
-[; ;interrupts.c: 102: timer0_int_handler(adcbuffer);
+[e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
 "102
-[e ( _timer0_int_handler (1 &U _adcbuffer ]
-[; ;interrupts.c: 103: LATBbits.LATB0 = 0;
-"103
-[e = . . _LATBbits 0 0 -> -> 0 `i `uc ]
-"104
 }
 [e :U 598 ]
-[; ;interrupts.c: 104: }
-[; ;interrupts.c: 113: SleepIfOkay();
-"113
+[; ;interrupts.c: 102: }
+[; ;interrupts.c: 105: if (INTCONbits.TMR0IF) {
+"105
+[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 599  ]
+{
+[; ;interrupts.c: 106: INTCONbits.TMR0IF = 0;
+"106
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[; ;interrupts.c: 108: LATBbits.LATB0 = 1;
+"108
+[e = . . _LATBbits 0 0 -> -> 1 `i `uc ]
+[; ;interrupts.c: 109: timer0_int_handler(adcbuffer);
+"109
+[e ( _timer0_int_handler (1 &U _adcbuffer ]
+[; ;interrupts.c: 110: LATBbits.LATB0 = 0;
+"110
+[e = . . _LATBbits 0 0 -> -> 0 `i `uc ]
+"111
+}
+[e :U 599 ]
+[; ;interrupts.c: 111: }
+[; ;interrupts.c: 120: SleepIfOkay();
+"120
 [e ( _SleepIfOkay ..  ]
-[; ;interrupts.c: 114: }
-"114
+[; ;interrupts.c: 121: }
+"121
 [e :UE 596 ]
 }
-[v F5106 `(v ~T0 @X0 1 tf ]
-"126
-[v _InterruptHandlerLow `ILF5106 ~T0 @X0 1 e ]
+[v F5108 `(v ~T0 @X0 1 tf ]
+"133
+[v _InterruptHandlerLow `ILF5108 ~T0 @X0 1 e ]
 {
-[; ;interrupts.c: 121: interrupt low_priority
-[; ;interrupts.c: 126: void InterruptHandlerLow() {
+[; ;interrupts.c: 128: interrupt low_priority
+[; ;interrupts.c: 133: void InterruptHandlerLow() {
 [e :U _InterruptHandlerLow ]
 [f ]
-[; ;interrupts.c: 128: if (PIR1bits.TMR1IF) {
-"128
-[e $ ! != -> . . _PIR1bits 0 0 `i -> -> -> 0 `i `Vuc `i 600  ]
-{
-[; ;interrupts.c: 129: PIR1bits.TMR1IF = 0;
-"129
-[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
-[; ;interrupts.c: 130: timer1_int_handler(adcbuffer);
-"130
-[e ( _timer1_int_handler (1 &U _adcbuffer ]
-"131
-}
-[e :U 600 ]
-[; ;interrupts.c: 131: }
-[; ;interrupts.c: 134: if (PIR1bits.RCIF) {
-"134
-[e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 601  ]
-{
-[; ;interrupts.c: 135: PIR1bits.RCIF = 0;
+[; ;interrupts.c: 135: if (PIR1bits.TMR1IF) {
 "135
-[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
-[; ;interrupts.c: 136: uart_recv_int_handler();
+[e $ ! != -> . . _PIR1bits 0 0 `i -> -> -> 0 `i `Vuc `i 601  ]
+{
+[; ;interrupts.c: 136: PIR1bits.TMR1IF = 0;
 "136
-[e ( _uart_recv_int_handler ..  ]
+[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
+[; ;interrupts.c: 137: timer1_int_handler(adcbuffer);
 "137
+[e ( _timer1_int_handler (1 &U _adcbuffer ]
+"138
 }
 [e :U 601 ]
-[; ;interrupts.c: 137: }
 [; ;interrupts.c: 138: }
-"138
-[e :UE 599 ]
+[; ;interrupts.c: 141: if (PIR1bits.RCIF) {
+"141
+[e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 602  ]
+{
+[; ;interrupts.c: 142: PIR1bits.RCIF = 0;
+"142
+[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
+[; ;interrupts.c: 143: uart_recv_int_handler();
+"143
+[e ( _uart_recv_int_handler ..  ]
+"144
+}
+[e :U 602 ]
+[; ;interrupts.c: 144: }
+[; ;interrupts.c: 145: }
+"145
+[e :UE 600 ]
 }

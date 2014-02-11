@@ -252,7 +252,7 @@ void main(void) {
      */
 
     // initialize Timers
-    OpenTimer0(TIMER_INT_ON & T0_8BIT & T0_SOURCE_INT & T0_PS_1_16);
+    OpenTimer0(TIMER_INT_ON & T0_8BIT & T0_SOURCE_INT & T0_PS_1_32);
     
 #ifdef __USE18F26J50
     // MTJ added second argument for OpenTimer1()
@@ -267,6 +267,9 @@ void main(void) {
 
     // Decide on the priority of the enabled peripheral interrupts
     // 0 is low, 1 is high
+
+    // ADC interrupt
+    IPR1bits.ADIP = 1;
     // Timer1 interrupt
     IPR1bits.TMR1IP = 0;
     // USART RX interrupt

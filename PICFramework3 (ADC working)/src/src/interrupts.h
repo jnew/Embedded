@@ -20,4 +20,5 @@ int in_low_int(void);
 // interrrupt handler?
 int in_main(void);
 
+unsigned char adcbuffer[28];
 #endif

@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "7 ../src/my_i2c.h
-[s S583 `uc -> 10 `i `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc -> 10 `i `uc 1 `uc 1 `uc 1 ]
+[s S583 `uc -> 28 `i `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc -> 28 `i `uc 1 `uc 1 `uc 1 ]
 [n S583 __i2c_comm buffer buflen event_count status error_code error_count outbuffer outbuflen outbufind slave_addr ]
 "7583 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
 [v _SSPBUF `Vuc ~T0 @X0 0 e@4041 ]
@@ -4721,7 +4721,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[10];
+[; ;messages.h: 14: unsigned char data[28];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
 [; ;messages.h: 18: msg queue[4];
@@ -4740,13 +4740,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
 [; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_i2c.h: 7: typedef struct __i2c_comm {
-[; ;my_i2c.h: 8: unsigned char buffer[10];
+[; ;my_i2c.h: 8: unsigned char buffer[28];
 [; ;my_i2c.h: 9: unsigned char buflen;
 [; ;my_i2c.h: 10: unsigned char event_count;
 [; ;my_i2c.h: 11: unsigned char status;
 [; ;my_i2c.h: 12: unsigned char error_code;
 [; ;my_i2c.h: 13: unsigned char error_count;
-[; ;my_i2c.h: 14: unsigned char outbuffer[10];
+[; ;my_i2c.h: 14: unsigned char outbuffer[28];
 [; ;my_i2c.h: 15: unsigned char outbuflen;
 [; ;my_i2c.h: 16: unsigned char outbufind;
 [; ;my_i2c.h: 17: unsigned char slave_addr;
@@ -5371,9 +5371,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 634 ]
 [; ;my_i2c.c: 237: }
 [; ;my_i2c.c: 238: }
-[; ;my_i2c.c: 241: if ((ic_ptr->buflen > 10 - 2) && (!msg_ready)) {
+[; ;my_i2c.c: 241: if ((ic_ptr->buflen > 28 - 2) && (!msg_ready)) {
 "241
-[e $ ! && > -> . *U _ic_ptr 1 `i - -> 10 `i -> 2 `i ! != -> _msg_ready `i -> -> -> 0 `i `uc `i 636  ]
+[e $ ! && > -> . *U _ic_ptr 1 `i - -> 28 `i -> 2 `i ! != -> _msg_ready `i -> -> -> 0 `i `uc `i 636  ]
 {
 [; ;my_i2c.c: 242: ic_ptr->status = 0x5;
 "242
@@ -5436,104 +5436,104 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _length `i ~T0 @X0 1 a ]
 [; ;my_i2c.c: 259: int length = 0;
 [e = _length -> 0 `i ]
-[; ;my_i2c.c: 262: if(ic_ptr->buffer[0] == 0xAA){
-"262
+[; ;my_i2c.c: 263: if(ic_ptr->buffer[0] == 0xAA){
+"263
 [e $ ! == -> *U + &U . *U _ic_ptr 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _ic_ptr 0 `ui `ux `i -> 170 `i 641  ]
 {
-[; ;my_i2c.c: 263: length = 10;
-"263
-[e = _length -> 10 `i ]
-"265
-}
-[e :U 641 ]
-[; ;my_i2c.c: 265: }
+[; ;my_i2c.c: 264: length = 28;
+"264
+[e = _length -> 28 `i ]
 [; ;my_i2c.c: 266: start_i2c_slave_reply(length, adcbuffer);
 "266
 [e ( _start_i2c_slave_reply (2 , -> _length `uc _adcbuffer ]
 [; ;my_i2c.c: 267: adcbuffer[0] = 0;
 "267
 [e = *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x -> -> 0 `i `uc ]
-[; ;my_i2c.c: 268: msg_to_send = 0;
 "268
-[e = _msg_to_send -> -> 0 `i `uc ]
+}
+[e :U 641 ]
+[; ;my_i2c.c: 268: }
+[; ;my_i2c.c: 269: msg_to_send = 0;
 "269
+[e = _msg_to_send -> -> 0 `i `uc ]
+"270
 }
 [e :U 640 ]
-[; ;my_i2c.c: 269: }
 [; ;my_i2c.c: 270: }
-"270
+[; ;my_i2c.c: 271: }
+"271
 [e :UE 599 ]
 }
-"275
+"276
 [v _init_i2c `(v ~T0 @X0 1 ef1`*S583 ]
 {
-[; ;my_i2c.c: 275: void init_i2c(i2c_comm *ic) {
+[; ;my_i2c.c: 276: void init_i2c(i2c_comm *ic) {
 [e :U _init_i2c ]
 [v _ic `*S583 ~T0 @X0 1 r1 ]
 [f ]
-[; ;my_i2c.c: 276: ic_ptr = ic;
-"276
-[e = _ic_ptr _ic ]
-[; ;my_i2c.c: 277: ic_ptr->buflen = 0;
+[; ;my_i2c.c: 277: ic_ptr = ic;
 "277
-[e = . *U _ic_ptr 1 -> -> 0 `i `uc ]
-[; ;my_i2c.c: 278: ic_ptr->event_count = 0;
+[e = _ic_ptr _ic ]
+[; ;my_i2c.c: 278: ic_ptr->buflen = 0;
 "278
-[e = . *U _ic_ptr 2 -> -> 0 `i `uc ]
-[; ;my_i2c.c: 279: ic_ptr->status = 0x5;
+[e = . *U _ic_ptr 1 -> -> 0 `i `uc ]
+[; ;my_i2c.c: 279: ic_ptr->event_count = 0;
 "279
-[e = . *U _ic_ptr 3 -> -> 5 `i `uc ]
-[; ;my_i2c.c: 280: ic_ptr->error_count = 0;
+[e = . *U _ic_ptr 2 -> -> 0 `i `uc ]
+[; ;my_i2c.c: 280: ic_ptr->status = 0x5;
 "280
-[e = . *U _ic_ptr 5 -> -> 0 `i `uc ]
-[; ;my_i2c.c: 281: }
+[e = . *U _ic_ptr 3 -> -> 5 `i `uc ]
+[; ;my_i2c.c: 281: ic_ptr->error_count = 0;
 "281
+[e = . *U _ic_ptr 5 -> -> 0 `i `uc ]
+[; ;my_i2c.c: 282: }
+"282
 [e :UE 642 ]
 }
-"286
+"287
 [v _i2c_configure_slave `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;my_i2c.c: 286: void i2c_configure_slave(unsigned char addr) {
+[; ;my_i2c.c: 287: void i2c_configure_slave(unsigned char addr) {
 [e :U _i2c_configure_slave ]
 [v _addr `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;my_i2c.c: 298: TRISCbits.TRISC3 = 1;
-"298
-[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
-[; ;my_i2c.c: 299: TRISCbits.TRISC4 = 1;
+[; ;my_i2c.c: 299: TRISCbits.TRISC3 = 1;
 "299
-[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
-[; ;my_i2c.c: 304: SSPADD = addr;
-"304
-[e = _SSPADD _addr ]
-[; ;my_i2c.c: 306: SSPSTAT = 0x0;
-"306
-[e = _SSPSTAT -> -> 0 `i `uc ]
-[; ;my_i2c.c: 307: SSPCON1 = 0x0;
-"307
-[e = _SSPCON1 -> -> 0 `i `uc ]
-[; ;my_i2c.c: 308: SSPCON2 = 0x0;
-"308
-[e = _SSPCON2 -> -> 0 `i `uc ]
-[; ;my_i2c.c: 309: SSPCON1 |= 0x0E;
-"309
-[e =| _SSPCON1 -> -> 14 `i `uc ]
-[; ;my_i2c.c: 310: SSPSTAT |= 0b10000000;
-"310
-[e =| _SSPSTAT -> -> 128 `i `uc ]
-[; ;my_i2c.c: 313: TRISCbits.TRISC3 = 1;
-"313
 [e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
-[; ;my_i2c.c: 314: TRISCbits.TRISC4 = 1;
-"314
+[; ;my_i2c.c: 300: TRISCbits.TRISC4 = 1;
+"300
 [e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
-[; ;my_i2c.c: 335: SSPCON2bits.SEN = 1;
-"335
-[e = . . _SSPCON2bits 0 0 -> -> 1 `i `uc ]
-[; ;my_i2c.c: 336: SSPCON1 |= 0b00100000;
+[; ;my_i2c.c: 305: SSPADD = addr;
+"305
+[e = _SSPADD _addr ]
+[; ;my_i2c.c: 307: SSPSTAT = 0x0;
+"307
+[e = _SSPSTAT -> -> 0 `i `uc ]
+[; ;my_i2c.c: 308: SSPCON1 = 0x0;
+"308
+[e = _SSPCON1 -> -> 0 `i `uc ]
+[; ;my_i2c.c: 309: SSPCON2 = 0x0;
+"309
+[e = _SSPCON2 -> -> 0 `i `uc ]
+[; ;my_i2c.c: 310: SSPCON1 |= 0x0E;
+"310
+[e =| _SSPCON1 -> -> 14 `i `uc ]
+[; ;my_i2c.c: 311: SSPSTAT |= 0b10000000;
+"311
+[e =| _SSPSTAT -> -> 128 `i `uc ]
+[; ;my_i2c.c: 314: TRISCbits.TRISC3 = 1;
+"314
+[e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
+[; ;my_i2c.c: 315: TRISCbits.TRISC4 = 1;
+"315
+[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
+[; ;my_i2c.c: 336: SSPCON2bits.SEN = 1;
 "336
+[e = . . _SSPCON2bits 0 0 -> -> 1 `i `uc ]
+[; ;my_i2c.c: 337: SSPCON1 |= 0b00100000;
+"337
 [e =| _SSPCON1 -> -> 32 `i `uc ]
-[; ;my_i2c.c: 338: }
-"338
+[; ;my_i2c.c: 339: }
+"339
 [e :UE 643 ]
 }

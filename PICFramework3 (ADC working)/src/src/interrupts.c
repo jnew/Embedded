@@ -3,7 +3,7 @@
 #include "user_interrupts.h"
 #include "messages.h"
 
-static unsigned char adcbuffer[10];
+
 
 //----------------------------------------------------------------------------
 // Note: This code for processing interrupts is configured to allow for high and
@@ -92,6 +92,13 @@ void InterruptHandlerHigh() {
         PIR1bits.SSPIF = 0;
         // call the handler
         i2c_int_handler(adcbuffer);
+    }
+
+    if(PIR1bits.ADIF){
+        //clear interrupt flag
+        PIR1bits.ADIF = 0;
+        LATBbits.LATB1 = 1;
+        LATBbits.LATB1 = 0;
     }
 
     // check to see if we have an interrupt on timer 0

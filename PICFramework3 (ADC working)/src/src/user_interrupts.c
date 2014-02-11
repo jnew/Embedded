@@ -32,17 +32,19 @@ void timer0_int_handler(unsigned char *adcbuffer) {
 
 
     ConvertADC();
-    while( BusyADC()) {}
+    while( BusyADC()) {
+        //LATBbits.LATB1 = 1;
+    }
+    //LATBbits.LATB1 = 0;
 
-    if(adcbuffer[0] < 9)                 // increment counter
+    if(adcbuffer[0] < 27)                 // increment counter
         adcbuffer[0] = adcbuffer[0] + 1;
     else {                               // shift out first value
-        for (int i = 1; i > 9; i++)
+        for (int i = 1; i < 27; i++)
         {
-            adcbuffer[i]=adcbuffer[i+1];
+            adcbuffer[i] = adcbuffer[i+1];
         }
     }
-
     adcbuffer[adcbuffer[0]] = ADRESH;    // put value in current count
 }
 
@@ -62,4 +64,8 @@ void timer1_int_handler(unsigned char *adcbuffer) {
 
     // reset the timer
     WriteTimer1(0);
+}
+
+void adc_int_handler(unsigned char *adcbuffer){
+
 }

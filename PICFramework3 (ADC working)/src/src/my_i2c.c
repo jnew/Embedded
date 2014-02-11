@@ -257,14 +257,15 @@ void i2c_int_handler(unsigned char *adcbuffer) {
     }
     if (msg_to_send) {
         int length = 0;
+        
         // send to the queue to *ask* for the data to be sent out
         //ToMainHigh_sendmsg(0, MSGT_I2C_RQST, (void *) ic_ptr->buffer);
         if(ic_ptr->buffer[0] == 0xAA){
-            length = 10;
+            length = 28;
 
+            start_i2c_slave_reply(length, adcbuffer);
+            adcbuffer[0] = 0; // reset count after send
         }
-        start_i2c_slave_reply(length, adcbuffer);
-        adcbuffer[0] = 0; // reset count after send
         msg_to_send = 0;
     }
 }

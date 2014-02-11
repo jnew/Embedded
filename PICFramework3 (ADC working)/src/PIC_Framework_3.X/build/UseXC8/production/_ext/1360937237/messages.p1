@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "10 ../src/messages.h
-[s S581 `uc 1 `uc 1 `uc 1 `uc -> 10 `i ]
+[s S581 `uc 1 `uc 1 `uc 1 `uc -> 28 `i ]
 [n S581 __msg full length msgtype data ]
 "17
 [s S582 `S581 -> 4 `i `uc 1 `uc 1 ]
@@ -4599,11 +4599,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interrupts.h: 16: int low_int_active(void);
 [; ;interrupts.h: 18: int in_low_int(void);
 [; ;interrupts.h: 21: int in_main(void);
+"23 ../src/interrupts.h
+[v _adcbuffer `uc ~T0 @X0 -> 28 `i e ]
+[; ;interrupts.h: 23: unsigned char adcbuffer[28];
 [; ;messages.h: 10: typedef struct __msg {
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[10];
+[; ;messages.h: 14: unsigned char data[28];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
 [; ;messages.h: 18: msg queue[4];

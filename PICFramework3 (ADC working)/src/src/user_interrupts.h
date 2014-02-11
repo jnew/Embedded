@@ -11,6 +11,8 @@ void timer0_int_handler(unsigned char *);
 
 void timer1_int_handler(unsigned char *);
 
+void adc_int_handler(unsigned char *);
+
 // include the handler from my uart code
 #include "my_uart.h"
 

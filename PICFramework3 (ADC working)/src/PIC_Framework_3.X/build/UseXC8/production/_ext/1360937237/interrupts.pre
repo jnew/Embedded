@@ -5916,17 +5916,21 @@ int in_low_int(void);
 
 int in_main(void);
 
+unsigned char adcbuffer[28];
+
 # 10 "../src/user_interrupts.h"
 void timer0_int_handler(unsigned char *);
 
 void timer1_int_handler(unsigned char *);
+
+void adc_int_handler(unsigned char *);
 
 # 10 "../src/messages.h"
 typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[10];
+unsigned char data[28];
 } msg;
 
 typedef struct __msg_queue {
@@ -5973,13 +5977,13 @@ void uart_recv_int_handler(void);
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {
-unsigned char buffer[10];
+unsigned char buffer[28];
 unsigned char buflen;
 unsigned char event_count;
 unsigned char status;
 unsigned char error_code;
 unsigned char error_count;
-unsigned char outbuffer[10];
+unsigned char outbuffer[28];
 unsigned char outbuflen;
 unsigned char outbufind;
 unsigned char slave_addr;
@@ -5994,10 +5998,7 @@ void i2c_configure_master(unsigned char);
 unsigned char i2c_master_send(unsigned char,unsigned char *);
 unsigned char i2c_master_recv(unsigned char);
 
-# 6 "../src/interrupts.c"
-static unsigned char adcbuffer[10];
-
-# 16
+# 16 "../src/interrupts.c"
 void enable_interrupts() {
 
 
@@ -6048,6 +6049,13 @@ PIR1bits.SSPIF = 0;
 i2c_int_handler(adcbuffer);
 }
 
+if(PIR1bits.ADIF){
+
+PIR1bits.ADIF = 0;
+LATBbits.LATB1 = 1;
+LATBbits.LATB1 = 0;
+}
+
 
 if (INTCONbits.TMR0IF) {
 INTCONbits.TMR0IF = 0;
@@ -6057,14 +6065,14 @@ timer0_int_handler(adcbuffer);
 LATBbits.LATB0 = 0;
 }
 
-# 113
+# 120
 SleepIfOkay();
 }
 
-# 121
+# 128
 interrupt low_priority
 
-# 126
+# 133
 void InterruptHandlerLow() {
 
 if (PIR1bits.TMR1IF) {

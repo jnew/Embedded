@@ -4582,11 +4582,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 151: extern __nonreentrant void _delay3(unsigned char);
 [; ;user_interrupts.h: 10: void timer0_int_handler(unsigned char *);
 [; ;user_interrupts.h: 12: void timer1_int_handler(unsigned char *);
+[; ;user_interrupts.h: 14: void adc_int_handler(unsigned char *);
 [; ;messages.h: 10: typedef struct __msg {
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[10];
+[; ;messages.h: 14: unsigned char data[28];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
 [; ;messages.h: 18: msg queue[4];
@@ -4611,13 +4612,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.h: 15: void init_uart_recv(uart_comm *);
 [; ;my_uart.h: 16: void uart_recv_int_handler(void);
 [; ;my_i2c.h: 7: typedef struct __i2c_comm {
-[; ;my_i2c.h: 8: unsigned char buffer[10];
+[; ;my_i2c.h: 8: unsigned char buffer[28];
 [; ;my_i2c.h: 9: unsigned char buflen;
 [; ;my_i2c.h: 10: unsigned char event_count;
 [; ;my_i2c.h: 11: unsigned char status;
 [; ;my_i2c.h: 12: unsigned char error_code;
 [; ;my_i2c.h: 13: unsigned char error_count;
-[; ;my_i2c.h: 14: unsigned char outbuffer[10];
+[; ;my_i2c.h: 14: unsigned char outbuffer[28];
 [; ;my_i2c.h: 15: unsigned char outbuflen;
 [; ;my_i2c.h: 16: unsigned char outbufind;
 [; ;my_i2c.h: 17: unsigned char slave_addr;
@@ -4642,71 +4643,85 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;user_interrupts.c: 34: ConvertADC();
 "34
 [e ( _ConvertADC ..  ]
-[; ;user_interrupts.c: 35: while( BusyADC()) {}
+[; ;user_interrupts.c: 35: while( BusyADC()) {
 "35
 [e $U 586  ]
 [e :U 587 ]
 {
+"37
 }
 [e :U 586 ]
+"35
 [e $ != -> ( _BusyADC ..  `i -> -> -> 0 `i `uc `i 587  ]
 [e :U 588 ]
-[; ;user_interrupts.c: 37: if(adcbuffer[0] < 9)
-"37
-[e $ ! < -> *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x `i -> 9 `i 589  ]
-[; ;user_interrupts.c: 38: adcbuffer[0] = adcbuffer[0] + 1;
-"38
+[; ;user_interrupts.c: 37: }
+[; ;user_interrupts.c: 40: if(adcbuffer[0] < 27)
+"40
+[e $ ! < -> *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x `i -> 27 `i 589  ]
+[; ;user_interrupts.c: 41: adcbuffer[0] = adcbuffer[0] + 1;
+"41
 [e = *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x -> + -> *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x `i -> 1 `i `uc ]
 [e $U 590  ]
-"39
+"42
 [e :U 589 ]
-[; ;user_interrupts.c: 39: else {
+[; ;user_interrupts.c: 42: else {
 {
-[; ;user_interrupts.c: 40: for (int i = 1; i > 9; i++)
-"40
+[; ;user_interrupts.c: 43: for (int i = 1; i < 27; i++)
+"43
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 1 `i ]
-[e $ > _i -> 9 `i 591  ]
+[e $ < _i -> 27 `i 591  ]
 [e $U 592  ]
-"41
-[e :U 591 ]
-[; ;user_interrupts.c: 41: {
-{
-[; ;user_interrupts.c: 42: adcbuffer[i]=adcbuffer[i+1];
-"42
-[e = *U + _adcbuffer * -> _i `x -> -> # *U _adcbuffer `i `x *U + _adcbuffer * -> + _i -> 1 `i `x -> -> # *U _adcbuffer `i `x ]
-"43
-}
-"40
-[e ++ _i -> 1 `i ]
-[e $ > _i -> 9 `i 591  ]
-[e :U 592 ]
-"43
-}
 "44
+[e :U 591 ]
+[; ;user_interrupts.c: 44: {
+{
+[; ;user_interrupts.c: 45: adcbuffer[i] = adcbuffer[i+1];
+"45
+[e = *U + _adcbuffer * -> _i `x -> -> # *U _adcbuffer `i `x *U + _adcbuffer * -> + _i -> 1 `i `x -> -> # *U _adcbuffer `i `x ]
+"46
+}
+"43
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 27 `i 591  ]
+[e :U 592 ]
+"46
+}
+"47
 }
 [e :U 590 ]
-[; ;user_interrupts.c: 43: }
-[; ;user_interrupts.c: 44: }
-[; ;user_interrupts.c: 46: adcbuffer[adcbuffer[0]] = ADRESH;
-"46
-[e = *U + _adcbuffer * -> *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x `ux -> -> # *U _adcbuffer `ui `ux _ADRESH ]
+[; ;user_interrupts.c: 46: }
 [; ;user_interrupts.c: 47: }
-"47
+[; ;user_interrupts.c: 48: adcbuffer[adcbuffer[0]] = ADRESH;
+"48
+[e = *U + _adcbuffer * -> *U + _adcbuffer * -> -> 0 `i `x -> -> # *U _adcbuffer `i `x `ux -> -> # *U _adcbuffer `ui `ux _ADRESH ]
+[; ;user_interrupts.c: 49: }
+"49
 [e :UE 585 ]
 }
-"52
+"54
 [v _timer1_int_handler `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;user_interrupts.c: 52: void timer1_int_handler(unsigned char *adcbuffer) {
+[; ;user_interrupts.c: 54: void timer1_int_handler(unsigned char *adcbuffer) {
 [e :U _timer1_int_handler ]
 [v _adcbuffer `*uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;user_interrupts.c: 64: WriteTimer1(0);
-"64
+[; ;user_interrupts.c: 66: WriteTimer1(0);
+"66
 [e ( _WriteTimer1 (1 -> -> 0 `i `ui ]
-[; ;user_interrupts.c: 65: }
-"65
+[; ;user_interrupts.c: 67: }
+"67
 [e :UE 594 ]
+}
+"69
+[v _adc_int_handler `(v ~T0 @X0 1 ef1`*uc ]
+{
+[; ;user_interrupts.c: 69: void adc_int_handler(unsigned char *adcbuffer){
+[e :U _adc_int_handler ]
+[v _adcbuffer `*uc ~T0 @X0 1 r1 ]
+[f ]
+[; ;user_interrupts.c: 71: }
+"71
+[e :UE 595 ]
 }

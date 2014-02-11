@@ -5979,12 +5979,14 @@ int in_low_int(void);
 
 int in_main(void);
 
+unsigned char adcbuffer[28];
+
 # 10 "../src/messages.h"
 typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[10];
+unsigned char data[28];
 } msg;
 
 typedef struct __msg_queue {
@@ -6031,13 +6033,13 @@ void uart_recv_int_handler(void);
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {
-unsigned char buffer[10];
+unsigned char buffer[28];
 unsigned char buflen;
 unsigned char event_count;
 unsigned char status;
 unsigned char error_code;
 unsigned char error_count;
-unsigned char outbuffer[10];
+unsigned char outbuffer[28];
 unsigned char outbuflen;
 unsigned char outbufind;
 unsigned char slave_addr;
@@ -6111,7 +6113,7 @@ unsigned char msgtype;
 unsigned char last_reg_recvd;
 uart_comm uc;
 i2c_comm ic;
-unsigned char msgbuffer[10 + 1];
+unsigned char msgbuffer[28 + 1];
 unsigned char i;
 uart_thread_struct uthread_data;
 timer1_thread_struct t1thread_data;
@@ -6143,46 +6145,48 @@ LATA = 0x0;
 TRISA = 0x0F;
 
 # 255
-OpenTimer0(0b11111111 & 0b11111111 & 0b11011111 & 0b11110011);
+OpenTimer0(0b11111111 & 0b11111111 & 0b11011111 & 0b11110100);
 
 # 264
 OpenTimer1(0b11111111 & 0b10111111 & 0b11001111 & 0b11111101 & 0b11110111 & 0b11111111);
 
-# 271
+# 272
+IPR1bits.ADIP = 1;
+
 IPR1bits.TMR1IP = 0;
 
 IPR1bits.RCIP = 0;
 
 IPR1bits.SSPIP = 1;
 
-# 284
+# 287
 i2c_configure_slave(0x9E);
 
-# 299
+# 302
 PIE1bits.SSPIE = 1;
 
-# 310
+# 313
 OpenUSART(0b01111111 & 0b11111111 & 0b11111110 & 0b11111101 &
 0b11111111 & 0b11101111, 0x19);
 
-# 317
+# 320
 enable_interrupts();
 
-# 331
+# 334
 OpenADC(0b10011111 & 0b01111111 & 0b11110101,
 0b10001111 & 0b01111111 & 0b11111110 & 0b11111101,
 0b1011);
 SetChanADC(0b10001111);
 
-# 343
+# 346
 while (1) {
 
 
 
 block_on_To_msgqueues();
 
-# 354
-length = ToMainHigh_recvmsg(10, &msgtype, (void *) msgbuffer);
+# 357
+length = ToMainHigh_recvmsg(28, &msgtype, (void *) msgbuffer);
 if (length < 0) {
 
 if (length != -4) {
@@ -6206,7 +6210,7 @@ break;
 case 42:
 {
 
-# 384
+# 387
 switch (last_reg_recvd) {
 case 0xaa:
 {
@@ -6244,7 +6248,7 @@ break;
 }
 
 
-length = ToMainLow_recvmsg(10, &msgtype, (void *) msgbuffer);
+length = ToMainLow_recvmsg(28, &msgtype, (void *) msgbuffer);
 if (length < 0) {
 
 if (length != -4) {
