@@ -5956,10 +5956,16 @@ signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 typedef struct __uart_comm {
 unsigned char buffer[4];
 unsigned char buflen;
+unsigned char txBuff[4];
+unsigned char txBuflen;
+unsigned char txBufind;
 } uart_comm;
 
 void init_uart_recv(uart_comm *);
 void uart_recv_int_handler(void);
+
+void uart_trans(unsigned char, unsigned char *);
+void uart_trans_int_handler();
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {

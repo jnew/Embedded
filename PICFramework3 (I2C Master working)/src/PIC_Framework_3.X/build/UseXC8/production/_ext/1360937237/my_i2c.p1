@@ -144,8 +144,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S393 . . . . . . . . . . . . . . . . . . . . . . . . . . . . ]
 "6743
 [v _SSPSTATbits `VS393 ~T0 @X0 0 e@4039 ]
-"41 ../src/my_i2c.h
-[v _i2c_slave_int_handler `(v ~T0 @X0 0 ef ]
+"40 ../src/my_i2c.h
+[v _i2c_master_int_handler `(v ~T0 @X0 0 ef ]
 [s S148 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S148 . LATB0 LATB1 LATB2 LATB3 LATB4 LATB5 LATB6 LATB7 ]
 [s S149 :1 `uc 1 ]
@@ -4769,9 +4769,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.h: 10: typedef struct __uart_comm {
 [; ;my_uart.h: 11: unsigned char buffer[4];
 [; ;my_uart.h: 12: unsigned char buflen;
-[; ;my_uart.h: 13: } uart_comm;
-[; ;my_uart.h: 15: void init_uart_recv(uart_comm *);
-[; ;my_uart.h: 16: void uart_recv_int_handler(void);
+[; ;my_uart.h: 13: unsigned char txBuff[4];
+[; ;my_uart.h: 14: unsigned char txBuflen;
+[; ;my_uart.h: 15: unsigned char txBufind;
+[; ;my_uart.h: 16: } uart_comm;
+[; ;my_uart.h: 18: void init_uart_recv(uart_comm *);
+[; ;my_uart.h: 19: void uart_recv_int_handler(void);
+[; ;my_uart.h: 21: void uart_trans(unsigned char, unsigned char *);
+[; ;my_uart.h: 22: void uart_trans_int_handler();
 [; ;my_i2c.h: 7: typedef struct __i2c_comm {
 [; ;my_i2c.h: 8: unsigned char buffer[28];
 [; ;my_i2c.h: 9: unsigned char buflen;
@@ -5062,9 +5067,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_i2c.c: 139: void i2c_int_handler(){
 [e :U _i2c_int_handler ]
 [f ]
-[; ;my_i2c.c: 143: i2c_slave_int_handler();
-"143
-[e ( _i2c_slave_int_handler ..  ]
+[; ;my_i2c.c: 141: i2c_master_int_handler();
+"141
+[e ( _i2c_master_int_handler ..  ]
 [; ;my_i2c.c: 145: }
 "145
 [e :UE 606 ]

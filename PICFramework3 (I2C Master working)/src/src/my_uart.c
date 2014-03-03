@@ -47,6 +47,29 @@ void uart_recv_int_handler() {
 }
 
 void init_uart_recv(uart_comm *uc) {
+    //INTCONbits.GIE = 1;
+    //INTCONbits.PEIE = 1;
     uc_ptr = uc;
     uc_ptr->buflen = 0;
+}
+
+void uart_trans(unsigned char length, unsigned char *data){
+    // load up the buffer with the data
+    for (uc_ptr->txBuflen = 0; uc_ptr->txBuflen < length; uc_ptr->txBuflen++) {
+        uc_ptr->txBuff[uc_ptr->txBuflen] = data[uc_ptr->txBuflen];
+    }
+    uc_ptr->txBufind = 0;
+    PIE1bits.TX1IE = 1;
+}
+
+
+void uart_trans_int_handler(){
+
+    if(TXSTAbits.TRMT){
+        if(uc_ptr->txBufind < uc_ptr->txBuflen){
+           TXREG = uc_ptr->txBuff[uc_ptr->txBufind];
+           uc_ptr->txBufind++;
+        } else
+            PIE1bits.TX1IE = 0; // reset because we are done
+    }
 }

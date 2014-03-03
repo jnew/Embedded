@@ -5949,10 +5949,16 @@ signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 typedef struct __uart_comm {
 unsigned char buffer[4];
 unsigned char buflen;
+unsigned char txBuff[4];
+unsigned char txBuflen;
+unsigned char txBufind;
 } uart_comm;
 
 void init_uart_recv(uart_comm *);
 void uart_recv_int_handler(void);
+
+void uart_trans(unsigned char, unsigned char *);
+void uart_trans_int_handler();
 
 # 9 "../src/my_uart.c"
 static uart_comm *uc_ptr;
@@ -5986,6 +5992,27 @@ ToMainLow_sendmsg(0, 30, (void *) 0);
 }
 
 void init_uart_recv(uart_comm *uc) {
+
+
 uc_ptr = uc;
 uc_ptr->buflen = 0;
+}
+
+void uart_trans(unsigned char length, unsigned char *data){
+
+for (uc_ptr->txBuflen = 0; uc_ptr->txBuflen < length; uc_ptr->txBuflen++) {
+uc_ptr->txBuff[uc_ptr->txBuflen] = data[uc_ptr->txBuflen];
+}
+uc_ptr->txBufind = 0;
+PIE1bits.TX1IE = 1;
+}
+
+
+void uart_trans_int_handler(){
+
+if(TXSTAbits.TRMT){
+WriteUSART(uc_ptr->txBuff[0]);
+}
+PIE1bits.TX1IE = 0;
+
 }

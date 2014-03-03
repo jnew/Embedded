@@ -5968,10 +5968,16 @@ signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 typedef struct __uart_comm {
 unsigned char buffer[4];
 unsigned char buflen;
+unsigned char txBuff[4];
+unsigned char txBuflen;
+unsigned char txBufind;
 } uart_comm;
 
 void init_uart_recv(uart_comm *);
 void uart_recv_int_handler(void);
+
+void uart_trans(unsigned char, unsigned char *);
+void uart_trans_int_handler();
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {
@@ -6083,12 +6089,18 @@ adc_int_handler();
 if (PIR1bits.TMR1IF) {
 PIR1bits.TMR1IF = 0;
 timer1_int_handler();
+
 }
 
+if (PIR1bits.TXIF) {
+PIR1bits.TXIF = 0;
+uart_trans_int_handler();
+}
 
 if (PIR1bits.RCIF) {
 PIR1bits.RCIF = 0;
 uart_recv_int_handler();
 }
+
 }
 

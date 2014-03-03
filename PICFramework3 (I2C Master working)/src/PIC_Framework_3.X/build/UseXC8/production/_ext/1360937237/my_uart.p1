@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "10 ../src/my_uart.h
-[s S583 `uc -> 4 `i `uc 1 ]
-[n S583 __uart_comm buffer buflen ]
+[s S583 `uc -> 4 `i `uc 1 `uc -> 4 `i `uc 1 `uc 1 ]
+[n S583 __uart_comm buffer buflen txBuff txBuflen txBufind ]
 [s S223 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S223 . TMR1IF TMR2IF CCP1IF SSP1IF TXIF RCIF ADIF PSPIF ]
 [s S224 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -39,6 +39,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S245 . . . . . . . . ]
 "4135 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
 [v _RCSTAbits `VS245 ~T0 @X0 0 e@4011 ]
+[s S220 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S220 . TMR1IE TMR2IE CCP1IE SSP1IE TXIE RCIE ADIE PSPIE ]
+[s S221 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S221 . . SSPIE TX1IE RC1IE ]
+[u S219 `S220 1 `S221 1 ]
+[n S219 . . . ]
+"3591
+[v _PIE1bits `VS219 ~T0 @X0 0 e@3997 ]
+[s S262 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S262 . TX9D TRMT BRGH SENDB SYNC TXEN TX9 CSRC ]
+[s S263 :1 `uc 1 :5 `uc 1 :1 `uc 1 ]
+[n S263 . TXD8 . TX8_9 ]
+[s S264 :6 `uc 1 :1 `uc 1 ]
+[n S264 . . NOT_TX8 ]
+[s S265 :6 `uc 1 :1 `uc 1 ]
+[n S265 . . nTX8 ]
+[s S266 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S266 . TX9D1 TRMT1 BRGH1 SENDB1 SYNC1 TXEN1 TX91 CSRC1 ]
+[u S261 `S262 1 `S263 1 `S264 1 `S265 1 `S266 1 ]
+[n S261 . . . . . . ]
+"4462
+[v _TXSTAbits `VS261 ~T0 @X0 0 e@4012 ]
+"597 C:\Program Files (x86)\Microchip\xc8\v1.30\include\plib\usart.h
+[v _WriteUSART `(v ~T0 @X0 0 ef1`uc ]
 [; ;htc.h: 22: extern void __builtin_software_breakpoint(void);
 [; ;pic18f45j10.h: 44: extern volatile unsigned char PORTA @ 0xF80;
 "46 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
@@ -4635,9 +4659,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.h: 10: typedef struct __uart_comm {
 [; ;my_uart.h: 11: unsigned char buffer[4];
 [; ;my_uart.h: 12: unsigned char buflen;
-[; ;my_uart.h: 13: } uart_comm;
-[; ;my_uart.h: 15: void init_uart_recv(uart_comm *);
-[; ;my_uart.h: 16: void uart_recv_int_handler(void);
+[; ;my_uart.h: 13: unsigned char txBuff[4];
+[; ;my_uart.h: 14: unsigned char txBuflen;
+[; ;my_uart.h: 15: unsigned char txBufind;
+[; ;my_uart.h: 16: } uart_comm;
+[; ;my_uart.h: 18: void init_uart_recv(uart_comm *);
+[; ;my_uart.h: 19: void uart_recv_int_handler(void);
+[; ;my_uart.h: 21: void uart_trans(unsigned char, unsigned char *);
+[; ;my_uart.h: 22: void uart_trans_int_handler();
 "9 ../src/my_uart.c
 [v _uc_ptr `*S583 ~T0 @X0 1 s ]
 [; ;my_uart.c: 9: static uart_comm *uc_ptr;
@@ -4703,13 +4732,75 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _init_uart_recv ]
 [v _uc `*S583 ~T0 @X0 1 r1 ]
 [f ]
-[; ;my_uart.c: 50: uc_ptr = uc;
-"50
-[e = _uc_ptr _uc ]
-[; ;my_uart.c: 51: uc_ptr->buflen = 0;
-"51
-[e = . *U _uc_ptr 1 -> -> 0 `i `uc ]
-[; ;my_uart.c: 52: }
+[; ;my_uart.c: 52: uc_ptr = uc;
 "52
+[e = _uc_ptr _uc ]
+[; ;my_uart.c: 53: uc_ptr->buflen = 0;
+"53
+[e = . *U _uc_ptr 1 -> -> 0 `i `uc ]
+[; ;my_uart.c: 54: }
+"54
 [e :UE 588 ]
+}
+"56
+[v _uart_trans `(v ~T0 @X0 1 ef2`uc`*uc ]
+{
+[; ;my_uart.c: 56: void uart_trans(unsigned char length, unsigned char *data){
+[e :U _uart_trans ]
+[v _length `uc ~T0 @X0 1 r1 ]
+[v _data `*uc ~T0 @X0 1 r2 ]
+[f ]
+[; ;my_uart.c: 58: for (uc_ptr->txBuflen = 0; uc_ptr->txBuflen < length; uc_ptr->txBuflen++) {
+"58
+{
+[e = . *U _uc_ptr 3 -> -> 0 `i `uc ]
+[e $U 593  ]
+[e :U 590 ]
+{
+[; ;my_uart.c: 59: uc_ptr->txBuff[uc_ptr->txBuflen] = data[uc_ptr->txBuflen];
+"59
+[e = *U + &U . *U _uc_ptr 2 * -> . *U _uc_ptr 3 `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux *U + _data * -> . *U _uc_ptr 3 `ux -> -> # *U _data `ui `ux ]
+"60
+}
+"58
+[e ++ . *U _uc_ptr 3 -> -> 1 `i `uc ]
+[e :U 593 ]
+[e $ < -> . *U _uc_ptr 3 `i -> _length `i 590  ]
+[e :U 591 ]
+"60
+}
+[; ;my_uart.c: 60: }
+[; ;my_uart.c: 61: uc_ptr->txBufind = 0;
+"61
+[e = . *U _uc_ptr 4 -> -> 0 `i `uc ]
+[; ;my_uart.c: 62: PIE1bits.TX1IE = 1;
+"62
+[e = . . _PIE1bits 1 2 -> -> 1 `i `uc ]
+[; ;my_uart.c: 63: }
+"63
+[e :UE 589 ]
+}
+"66
+[v _uart_trans_int_handler `(v ~T0 @X0 1 ef ]
+{
+[; ;my_uart.c: 66: void uart_trans_int_handler(){
+[e :U _uart_trans_int_handler ]
+[f ]
+[; ;my_uart.c: 68: if(TXSTAbits.TRMT){
+"68
+[e $ ! != -> . . _TXSTAbits 0 1 `i -> -> -> 0 `i `Vuc `i 595  ]
+{
+[; ;my_uart.c: 69: WriteUSART(uc_ptr->txBuff[0]);
+"69
+[e ( _WriteUSART (1 *U + &U . *U _uc_ptr 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux ]
+"70
+}
+[e :U 595 ]
+[; ;my_uart.c: 70: }
+[; ;my_uart.c: 71: PIE1bits.TX1IE = 0;
+"71
+[e = . . _PIE1bits 1 2 -> -> 0 `i `uc ]
+[; ;my_uart.c: 73: }
+"73
+[e :UE 594 ]
 }

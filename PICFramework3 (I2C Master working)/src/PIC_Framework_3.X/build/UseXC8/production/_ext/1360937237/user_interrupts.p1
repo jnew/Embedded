@@ -4606,9 +4606,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.h: 10: typedef struct __uart_comm {
 [; ;my_uart.h: 11: unsigned char buffer[4];
 [; ;my_uart.h: 12: unsigned char buflen;
-[; ;my_uart.h: 13: } uart_comm;
-[; ;my_uart.h: 15: void init_uart_recv(uart_comm *);
-[; ;my_uart.h: 16: void uart_recv_int_handler(void);
+[; ;my_uart.h: 13: unsigned char txBuff[4];
+[; ;my_uart.h: 14: unsigned char txBuflen;
+[; ;my_uart.h: 15: unsigned char txBufind;
+[; ;my_uart.h: 16: } uart_comm;
+[; ;my_uart.h: 18: void init_uart_recv(uart_comm *);
+[; ;my_uart.h: 19: void uart_recv_int_handler(void);
+[; ;my_uart.h: 21: void uart_trans(unsigned char, unsigned char *);
+[; ;my_uart.h: 22: void uart_trans_int_handler();
 [; ;my_i2c.h: 7: typedef struct __i2c_comm {
 [; ;my_i2c.h: 8: unsigned char buffer[28];
 [; ;my_i2c.h: 9: unsigned char buflen;

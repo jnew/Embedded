@@ -203,7 +203,7 @@ void main(void) {
 #else
 #ifdef __USE18F45J10
     OSCCON = 0x82; // see datasheeet
-    OSCTUNEbits.PLLEN = 1; // Makes the clock exceed the PIC's rated speed if the PLL is on
+    OSCTUNEbits.PLLEN = 0; // Makes the clock exceed the PIC's rated speed if the PLL is on
 #else
 #ifdef __USE18F26J50
     OSCCON = 0xE0; // see datasheeet
@@ -275,6 +275,8 @@ void main(void) {
     IPR1bits.TMR1IP = 0;
     // USART RX interrupt
     IPR1bits.RCIP = 0;
+    // USART TX interrupt
+    IPR1bits.TXIP = 0;
     // I2C interrupt
     IPR1bits.SSPIP = 1;
 
@@ -316,8 +318,11 @@ void main(void) {
     Open1USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT &
         USART_CONT_RX & USART_BRGH_LOW, 0x19);
 #else
-    OpenUSART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT &
-        USART_CONT_RX & USART_BRGH_LOW, 0x19);
+    OpenUSART(USART_TX_INT_ON & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT &
+        USART_CONT_RX & USART_BRGH_HIGH, 38);
+    RCSTAbits.SPEN = 1;
+    TRISC = 0xFF;
+    
 #endif
 #endif
 
@@ -351,11 +356,13 @@ void main(void) {
     // that should get them.  Although the subroutines are not threads, but
     // they can be equated with the tasks in your task diagram if you
     // structure them properly.
-      unsigned char msg[2] = {0x12, 0x34};
-      //i2c_master_send(2, 3, msg, 0x9E); // send length, recv length, message and address + r/w bit (0)
+      unsigned char msg[1] = {0x01};
+      //i2c_master_send(1, 5, msg, 0x9E); // send length, recv length, message and address + r/w bit (0)
       //i2c_master_recv();
       
-      
+      uart_trans(1, msg);
+      //WriteUSART(0xAA);
+
     while (1) {
         // Call a routine that blocks until either on the incoming
         // messages queues has a message (this may put the processor into
@@ -390,13 +397,13 @@ void main(void) {
                 };
                 case MSGT_I2C_MASTER_RECV_COMPLETE:
                 {
-                    i2c_master_send(2, 3, msgbuffer, 0x9E);
+                    i2c_master_send(1, 5, msg, 0x9E);
                     break;
                 };
                 case MSGT_I2C_MASTER_RECV_FAILED:
                 {
                     unsigned char msg2[2] = {0xEE, 0xFF};
-                    i2c_master_send(2, 3, msg2, 0x9E);
+                    i2c_master_send(1, 5, msg, 0x9E);
                     LATBbits.LATB2 = 0;
                     break;
                 };
@@ -425,6 +432,7 @@ void main(void) {
                 case MSGT_OVERRUN:
                 case MSGT_UART_DATA:
                 {
+                    
                     uart_lthread(&uthread_data, msgtype, length, msgbuffer);
                     break;
                 };

@@ -52,7 +52,7 @@
 #define MSGT_I2C_MASTER_RECV_FAILED 46
 
 //I2C stuff
-//#define I2CMASTER   //comment out for slave
+#define I2CMASTER   //comment out for slave
 
 #endif
 

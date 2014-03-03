@@ -6024,10 +6024,16 @@ signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 typedef struct __uart_comm {
 unsigned char buffer[4];
 unsigned char buflen;
+unsigned char txBuff[4];
+unsigned char txBuflen;
+unsigned char txBufind;
 } uart_comm;
 
 void init_uart_recv(uart_comm *);
 void uart_recv_int_handler(void);
+
+void uart_trans(unsigned char, unsigned char *);
+void uart_trans_int_handler();
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {
@@ -6122,7 +6128,7 @@ timer0_thread_struct t0thread_data;
 
 # 205
 OSCCON = 0x82;
-OSCTUNEbits.PLLEN = 1;
+OSCTUNEbits.PLLEN = 0;
 
 # 224
 init_uart_recv(&uc);
@@ -6159,31 +6165,37 @@ IPR1bits.TMR1IP = 0;
 
 IPR1bits.RCIP = 0;
 
+IPR1bits.TXIP = 0;
+
 IPR1bits.SSPIP = 1;
 
 # 291
-i2c_configure_slave(0x9E);
+i2c_configure_master();
 
-# 308
+# 310
 PIE1bits.SSPIE = 1;
 
-# 319
-OpenUSART(0b01111111 & 0b11111111 & 0b11111110 & 0b11111101 &
-0b11111111 & 0b11101111, 0x19);
+# 321
+OpenUSART(0b11111111 & 0b11111111 & 0b11111110 & 0b11111101 &
+0b11111111 & 0b11111111, 38);
+RCSTAbits.SPEN = 1;
+TRISC = 0xFF;
 
-# 326
+# 331
 enable_interrupts();
 
-# 340
+# 345
 OpenADC(0b11011111 & 0b01111111 & 0b11110011,
 0b10001111 & 0b01111111 & 0b11111110 & 0b11111101,
 0b1011);
 SetChanADC(0b10001111);
 
-# 354
-unsigned char msg[2] = {0x12, 0x34};
+# 359
+unsigned char msg[1] = {0x01};
 
 
+
+uart_trans(1, msg);
 
 
 while (1) {
@@ -6192,7 +6204,7 @@ while (1) {
 
 block_on_To_msgqueues();
 
-# 370
+# 377
 length = ToMainHigh_recvmsg(28, &msgtype, (void *) msgbuffer);
 if (length < 0) {
 
@@ -6216,13 +6228,13 @@ break;
 };
 case 45:
 {
-i2c_master_send(2, 3, msgbuffer, 0x9E);
+i2c_master_send(1, 5, msg, 0x9E);
 break;
 };
 case 46:
 {
 unsigned char msg2[2] = {0xEE, 0xFF};
-i2c_master_send(2, 3, msg2, 0x9E);
+i2c_master_send(1, 5, msg, 0x9E);
 LATBbits.LATB2 = 0;
 break;
 };
@@ -6251,6 +6263,7 @@ break;
 case 30:
 case 31:
 {
+
 uart_lthread(&uthread_data, msgtype, length, msgbuffer);
 break;
 };
