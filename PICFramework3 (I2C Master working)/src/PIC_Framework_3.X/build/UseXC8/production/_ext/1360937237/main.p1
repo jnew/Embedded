@@ -97,6 +97,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ToMainHigh_recvmsg `(c ~T0 @X0 0 ef3`uc`*uc`*v ]
 "6 ../src/timer0_thread.h
 [v _timer0_lthread `(i ~T0 @X0 0 ef4`*S588`i`i`*uc ]
+"21 ../src/my_uart.h
+[v _uart_trans `(v ~T0 @X0 0 ef2`uc`*uc ]
 [s S148 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S148 . LATB0 LATB1 LATB2 LATB3 LATB4 LATB5 LATB6 LATB7 ]
 [s S149 :1 `uc 1 ]
@@ -4942,15 +4944,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 355: SetChanADC(0b10001111);
 "355
 [e ( _SetChanADC (1 -> -> 143 `i `uc ]
-[v F5211 `uc ~T0 @X0 -> -> 1 `i `ux s ]
+[v F5211 `uc ~T0 @X0 -> 2 `i s ]
 [i F5211
 :U ..
 "366
 -> -> 1 `i `uc
+-> -> 2 `i `uc
 ..
 ]
-[v _msg `uc ~T0 @X0 -> -> 1 `i `ux a ]
-[; ;main.c: 366: unsigned char msg[1] = {0x01};
+[v _msg `uc ~T0 @X0 -> 2 `i a ]
+[; ;main.c: 366: unsigned char msg[2] = {0x01, 0x02};
 [e = _msg F5211 ]
 [; ;main.c: 373: while (1) {
 "373
@@ -5023,42 +5026,45 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 406: {
 "406
 {
-[; ;main.c: 408: break;
-"408
-[e $U 596  ]
+[; ;main.c: 407: uart_trans(length, msgbuffer);
+"407
+[e ( _uart_trans (2 , -> _length `uc &U _msgbuffer ]
+[; ;main.c: 409: break;
 "409
-}
-[; ;main.c: 409: };
-[; ;main.c: 410: case 46:
+[e $U 596  ]
 "410
-[e :U 602 ]
-[; ;main.c: 411: {
+}
+[; ;main.c: 410: };
+[; ;main.c: 411: case 46:
 "411
+[e :U 602 ]
+[; ;main.c: 412: {
+"412
 {
-[; ;main.c: 414: LATBbits.LATB2 = 0;
-"414
-[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 415: break;
+[; ;main.c: 415: LATBbits.LATB2 = 0;
 "415
-[e $U 596  ]
+[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 416: break;
 "416
-}
-[; ;main.c: 416: };
-[; ;main.c: 417: default:
-"417
-[e :U 603 ]
-[; ;main.c: 418: {
-"418
-{
-[; ;main.c: 420: break;
-"420
 [e $U 596  ]
-"421
+"417
 }
-[; ;main.c: 421: };
+[; ;main.c: 417: };
+[; ;main.c: 418: default:
+"418
+[e :U 603 ]
+[; ;main.c: 419: {
+"419
+{
+[; ;main.c: 421: break;
+"421
+[e $U 596  ]
 "422
 }
 [; ;main.c: 422: };
+"423
+}
+[; ;main.c: 423: };
 [e $U 596  ]
 "391
 [e :U 597 ]
@@ -5068,128 +5074,128 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> -> 45 `i `uc 601
  , $ -> -> 46 `i `uc 602
  603 ]
-"422
-[e :U 596 ]
 "423
+[e :U 596 ]
+"424
 }
 [e :U 595 ]
-[; ;main.c: 423: }
-[; ;main.c: 426: length = ToMainLow_recvmsg(28, &msgtype, (void *) msgbuffer);
-"426
-[e = _length ( _ToMainLow_recvmsg (3 , , -> -> 28 `i `uc &U _msgtype -> &U _msgbuffer `*v ]
-[; ;main.c: 427: if (length < 0) {
+[; ;main.c: 424: }
+[; ;main.c: 427: length = ToMainLow_recvmsg(28, &msgtype, (void *) msgbuffer);
 "427
+[e = _length ( _ToMainLow_recvmsg (3 , , -> -> 28 `i `uc &U _msgtype -> &U _msgbuffer `*v ]
+[; ;main.c: 428: if (length < 0) {
+"428
 [e $ ! < -> _length `i -> 0 `i 604  ]
 {
-[; ;main.c: 429: if (length != -4) {
-"429
+[; ;main.c: 430: if (length != -4) {
+"430
 [e $ ! != -> _length `i -U -> 4 `i 605  ]
 {
-"431
-}
-[e :U 605 ]
 "432
 }
-[; ;main.c: 431: }
-[; ;main.c: 432: } else {
+[e :U 605 ]
+"433
+}
+[; ;main.c: 432: }
+[; ;main.c: 433: } else {
 [e $U 606  ]
 [e :U 604 ]
 {
-[; ;main.c: 433: switch (msgtype) {
-"433
+[; ;main.c: 434: switch (msgtype) {
+"434
 [e $U 608  ]
 {
-[; ;main.c: 434: case 11:
-"434
-[e :U 609 ]
-[; ;main.c: 435: {
+[; ;main.c: 435: case 11:
 "435
-{
-[; ;main.c: 436: timer1_lthread(&t1thread_data, msgtype, length, msgbuffer);
+[e :U 609 ]
+[; ;main.c: 436: {
 "436
-[e ( _timer1_lthread (4 , , , &U _t1thread_data -> _msgtype `i -> _length `i &U _msgbuffer ]
-[; ;main.c: 437: break;
-"437
-[e $U 607  ]
-"438
-}
-[; ;main.c: 438: };
-[; ;main.c: 439: case 30:
-"439
-[e :U 610 ]
-"440
-[e :U 611 ]
-[; ;main.c: 440: case 31:
-[; ;main.c: 441: {
-"441
 {
-[; ;main.c: 442: if(msgbuffer[0] == 0xBA){
+[; ;main.c: 437: timer1_lthread(&t1thread_data, msgtype, length, msgbuffer);
+"437
+[e ( _timer1_lthread (4 , , , &U _t1thread_data -> _msgtype `i -> _length `i &U _msgbuffer ]
+[; ;main.c: 438: break;
+"438
+[e $U 607  ]
+"439
+}
+[; ;main.c: 439: };
+[; ;main.c: 440: case 30:
+"440
+[e :U 610 ]
+"441
+[e :U 611 ]
+[; ;main.c: 441: case 31:
+[; ;main.c: 442: {
 "442
+{
+[; ;main.c: 443: if(msgbuffer[0] == 0xBA){
+"443
 [e $ ! == -> *U + &U _msgbuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _msgbuffer `ui `ux `i -> 186 `i 612  ]
 {
-[; ;main.c: 444: i2c_master_send(5, 5, msgbuffer, 0xBE);
-"444
-[e ( _i2c_master_send (4 , , , -> -> 5 `i `uc -> -> 5 `i `uc &U _msgbuffer -> -> 190 `i `uc ]
+[; ;main.c: 445: i2c_master_send(5, 5, msgbuffer, 0xBE);
 "445
+[e ( _i2c_master_send (4 , , , -> -> 5 `i `uc -> -> 5 `i `uc &U _msgbuffer -> -> 190 `i `uc ]
+"446
 }
-[; ;main.c: 445: } else if(msgbuffer[0] == 0xAA){
+[; ;main.c: 446: } else if(msgbuffer[0] == 0xAA){
 [e $U 613  ]
 [e :U 612 ]
 [e $ ! == -> *U + &U _msgbuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _msgbuffer `ui `ux `i -> 170 `i 614  ]
 {
-[; ;main.c: 447: i2c_master_send(1, 5, msgbuffer, 0x9E);
-"447
-[e ( _i2c_master_send (4 , , , -> -> 1 `i `uc -> -> 5 `i `uc &U _msgbuffer -> -> 158 `i `uc ]
+[; ;main.c: 448: i2c_master_send(1, 5, msgbuffer, 0x9E);
 "448
+[e ( _i2c_master_send (4 , , , -> -> 1 `i `uc -> -> 5 `i `uc &U _msgbuffer -> -> 158 `i `uc ]
+"449
 }
 [e :U 614 ]
-"450
+"451
 [e :U 613 ]
-[; ;main.c: 448: }
-[; ;main.c: 450: LATBbits.LATB2 = 0;
+[; ;main.c: 449: }
+[; ;main.c: 451: LATBbits.LATB2 = 0;
 [e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 452: break;
-"452
-[e $U 607  ]
+[; ;main.c: 453: break;
 "453
-}
-[; ;main.c: 453: };
-[; ;main.c: 454: default:
-"454
-[e :U 615 ]
-[; ;main.c: 455: {
-"455
-{
-[; ;main.c: 457: break;
-"457
 [e $U 607  ]
-"458
+"454
 }
-[; ;main.c: 458: };
+[; ;main.c: 454: };
+[; ;main.c: 455: default:
+"455
+[e :U 615 ]
+[; ;main.c: 456: {
+"456
+{
+[; ;main.c: 458: break;
+"458
+[e $U 607  ]
 "459
 }
 [; ;main.c: 459: };
+"460
+}
+[; ;main.c: 460: };
 [e $U 607  ]
-"433
+"434
 [e :U 608 ]
 [e [\ _msgtype , $ -> -> 11 `i `uc 609
  , $ -> -> 30 `i `uc 610
  , $ -> -> 31 `i `uc 611
  615 ]
-"459
-[e :U 607 ]
 "460
+[e :U 607 ]
+"461
 }
 [e :U 606 ]
-"461
+"462
 }
 [e :U 590 ]
 "373
 [e $U 591  ]
 [e :U 592 ]
-[; ;main.c: 460: }
 [; ;main.c: 461: }
-[; ;main.c: 463: }
-"463
+[; ;main.c: 462: }
+[; ;main.c: 464: }
+"464
 [e :UE 589 ]
 }

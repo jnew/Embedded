@@ -363,11 +363,11 @@ void main(void) {
     // that should get them.  Although the subroutines are not threads, but
     // they can be equated with the tasks in your task diagram if you
     // structure them properly.
-      unsigned char msg[1] = {0x01};
+      unsigned char msg[2] = {0x01, 0x02};
      //i2c_master_send(1, 5, msg, 0x9E); // send length, recv length, message and address + r/w bit (0)
       //i2c_master_recv();
       
-      //uart_trans(1, msg);
+      //uart_trans(2, msg);
       //WriteUSART(0xAA);
 
     while (1) {
@@ -404,6 +404,7 @@ void main(void) {
                 };
                 case MSGT_I2C_MASTER_RECV_COMPLETE:
                 {
+                    uart_trans(length, msgbuffer);
                     //i2c_master_send(1, 5, msg, 0x9E);
                     break;
                 };

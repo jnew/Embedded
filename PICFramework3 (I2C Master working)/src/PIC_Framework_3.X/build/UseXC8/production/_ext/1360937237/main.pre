@@ -6191,7 +6191,7 @@ OpenADC(0b11011111 & 0b01111111 & 0b11110011,
 SetChanADC(0b10001111);
 
 # 366
-unsigned char msg[1] = {0x01};
+unsigned char msg[2] = {0x01, 0x02};
 
 # 373
 while (1) {
@@ -6224,6 +6224,7 @@ break;
 };
 case 45:
 {
+uart_trans(length, msgbuffer);
 
 break;
 };
