@@ -5909,11 +5909,11 @@ typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[28];
+unsigned char data[10];
 } msg;
 
 typedef struct __msg_queue {
-msg queue[4];
+msg queue[5];
 unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;
@@ -6001,7 +6001,9 @@ uc_ptr->buflen = 0;
 void uart_trans(unsigned char length, unsigned char *data){
 
 for (uc_ptr->txBuflen = 0; uc_ptr->txBuflen < length; uc_ptr->txBuflen++) {
+
 uc_ptr->txBuff[uc_ptr->txBuflen] = data[uc_ptr->txBuflen];
+
 }
 uc_ptr->txBufind = 0;
 PIE1bits.TX1IE = 1;
@@ -6013,6 +6015,7 @@ void uart_trans_int_handler(){
 if(TXSTAbits.TRMT){
 if(uc_ptr->txBufind < uc_ptr->txBuflen){
 TXREG = uc_ptr->txBuff[uc_ptr->txBufind];
+
 uc_ptr->txBufind++;
 } else
 PIE1bits.TX1IE = 0;

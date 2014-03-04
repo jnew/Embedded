@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "10 ../src/messages.h
-[s S581 `uc 1 `uc 1 `uc 1 `uc -> 28 `i ]
+[s S581 `uc 1 `uc 1 `uc 1 `uc -> 10 `i ]
 [n S581 __msg full length msgtype data ]
 "17
-[s S582 `S581 -> 4 `i `uc 1 `uc 1 ]
+[s S582 `S581 -> 5 `i `uc 1 `uc 1 ]
 [n S582 __msg_queue queue cur_write_ind cur_read_ind ]
 "22 C:\Program Files (x86)\Microchip\xc8\v1.30\include\string.h
 [v _memcpy `(*v ~T0 @X0 0 ef3`*v`*Cv`ui ]
@@ -4603,10 +4603,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[28];
+[; ;messages.h: 14: unsigned char data[10];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
-[; ;messages.h: 18: msg queue[4];
+[; ;messages.h: 18: msg queue[5];
 [; ;messages.h: 19: unsigned char cur_write_ind;
 [; ;messages.h: 20: unsigned char cur_read_ind;
 [; ;messages.h: 21: } msg_queue;
@@ -4663,11 +4663,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.c: 18: qptr->cur_read_ind = 0;
 "18
 [e = . *U _qptr 2 -> -> 0 `i `uc ]
-[; ;messages.c: 19: for (i = 0; i < 4; i++) {
+[; ;messages.c: 19: for (i = 0; i < 5; i++) {
 "19
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 4 `i 584  ]
+[e $ < -> _i `i -> 5 `i 584  ]
 [e $U 585  ]
 [e :U 584 ]
 {
@@ -4678,7 +4678,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 "19
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 4 `i 584  ]
+[e $ < -> _i `i -> 5 `i 584  ]
 [e :U 585 ]
 "21
 }
@@ -4734,9 +4734,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.c: 55: memcpy(qmsg->data, data, tlength);
 "55
 [e ( _memcpy (3 , , -> &U . *U _qmsg 3 `*v -> _data `*Cv _tlength ]
-[; ;messages.c: 56: qptr->cur_write_ind = (qptr->cur_write_ind + 1) % 4;
+[; ;messages.c: 56: qptr->cur_write_ind = (qptr->cur_write_ind + 1) % 5;
 "56
-[e = . *U _qptr 1 -> % + -> . *U _qptr 1 `i -> 1 `i -> 4 `i `uc ]
+[e = . *U _qptr 1 -> % + -> . *U _qptr 1 `i -> 1 `i -> 5 `i `uc ]
 [; ;messages.c: 59: qmsg->full = 1;
 "59
 [e = . *U _qmsg 0 -> -> 1 `i `uc ]
@@ -4795,9 +4795,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.c: 81: memcpy(data, qmsg->data, tlength);
 "81
 [e ( _memcpy (3 , , _data -> &U . *U _qmsg 3 `*Cv _tlength ]
-[; ;messages.c: 87: qptr->cur_read_ind = (qptr->cur_read_ind + 1) % 4;
+[; ;messages.c: 87: qptr->cur_read_ind = (qptr->cur_read_ind + 1) % 5;
 "87
-[e = . *U _qptr 2 -> % + -> . *U _qptr 2 `i -> 1 `i -> 4 `i `uc ]
+[e = . *U _qptr 2 -> % + -> . *U _qptr 2 `i -> 1 `i -> 5 `i `uc ]
 [; ;messages.c: 89: (*msgtype) = qmsg->msgtype;
 "89
 [e = *U _msgtype . *U _qmsg 2 ]

@@ -5916,11 +5916,11 @@ typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[28];
+unsigned char data[10];
 } msg;
 
 typedef struct __msg_queue {
-msg queue[4];
+msg queue[5];
 unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;
@@ -5969,14 +5969,14 @@ void uart_trans_int_handler();
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {
-unsigned char buffer[28];
+unsigned char buffer[10];
 unsigned char buflen;
 unsigned char bufind;
 unsigned char event_count;
 unsigned char status;
 unsigned char error_code;
 unsigned char error_count;
-unsigned char outbuffer[28];
+unsigned char outbuffer[10];
 unsigned char outbuflen;
 unsigned char outbufind;
 unsigned char slave_addr;
@@ -6021,7 +6021,7 @@ SSPCON1bits.SSPEN = 1;
 
 # 44
 unsigned char i2c_master_send(unsigned char sendlength, unsigned char recvlength, unsigned char *msg, unsigned char slave_addr) {
-LATBbits.LATB2 = 1;
+
 for (ic_ptr->outbuflen = 0; ic_ptr->outbuflen < sendlength; ic_ptr->outbuflen++) {
 ic_ptr->outbuffer[ic_ptr->outbuflen] = msg[ic_ptr->outbuflen];
 }
@@ -6151,8 +6151,10 @@ SSPCON2bits.RCEN = 1;
 ic_ptr->status = 0xC;
 } else {
 
+if(ic_ptr->buffer[4] == 0x78)
 LATBbits.LATB2 = 1;
 ToMainHigh_sendmsg(0, 46, ic_ptr->buffer);
+LATBbits.LATB2 = 0;
 ic_ptr->buflen = 0;
 ic_ptr->status = 0x5;
 }
@@ -6162,14 +6164,13 @@ case 0xC:
 {
 LATBbits.LATB1 = 1;
 LATBbits.LATB1 = 0;
-if(ic_ptr->buflen > ic_ptr->bufind+1){
+if(ic_ptr->bufind < ic_ptr->buflen){
 ic_ptr->buffer[ic_ptr->bufind] = SSPBUF;
 ic_ptr->bufind++;
 ic_ptr->status = 0x7;
 
-SSPCON2bits.ACKDT = 0;
-SSPCON2bits.ACKEN = 1;
-}else{
+}
+if(ic_ptr->bufind == ic_ptr->buflen){
 ic_ptr->status = 0xB;
 
 
@@ -6177,6 +6178,10 @@ ToMainHigh_sendmsg(ic_ptr->buflen, 45, ic_ptr->buffer);
 
 
 SSPCON2bits.ACKDT = 1;
+SSPCON2bits.ACKEN = 1;
+} else {
+
+SSPCON2bits.ACKDT = 0;
 SSPCON2bits.ACKEN = 1;
 }
 break;
@@ -6342,7 +6347,7 @@ SSPCON1bits.CKP = 1;
 }
 
 
-if ((ic_ptr->buflen > 28 - 2) && (!msg_ready)) {
+if ((ic_ptr->buflen > 10 - 2) && (!msg_ready)) {
 ic_ptr->status = 0x5;
 ic_ptr->error_count++;
 ic_ptr->error_code = 0x7;
@@ -6395,7 +6400,7 @@ ic_ptr->error_count = 0;
 
 void i2c_configure_slave(unsigned char addr) {
 
-# 447
+# 452
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
 
@@ -6414,7 +6419,7 @@ SSPSTAT |= 0b10000000;
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
 
-# 484
+# 489
 SSPCON2bits.SEN = 1;
 SSPCON1 |= 0b00100000;
 

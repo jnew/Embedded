@@ -4638,10 +4638,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[28];
+[; ;messages.h: 14: unsigned char data[10];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
-[; ;messages.h: 18: msg queue[4];
+[; ;messages.h: 18: msg queue[5];
 [; ;messages.h: 19: unsigned char cur_write_ind;
 [; ;messages.h: 20: unsigned char cur_read_ind;
 [; ;messages.h: 21: } msg_queue;
@@ -4757,63 +4757,63 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 593  ]
 [e :U 590 ]
 {
-[; ;my_uart.c: 59: uc_ptr->txBuff[uc_ptr->txBuflen] = data[uc_ptr->txBuflen];
-"59
-[e = *U + &U . *U _uc_ptr 2 * -> . *U _uc_ptr 3 `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux *U + _data * -> . *U _uc_ptr 3 `ux -> -> # *U _data `ui `ux ]
+[; ;my_uart.c: 60: uc_ptr->txBuff[uc_ptr->txBuflen] = data[uc_ptr->txBuflen];
 "60
+[e = *U + &U . *U _uc_ptr 2 * -> . *U _uc_ptr 3 `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux *U + _data * -> . *U _uc_ptr 3 `ux -> -> # *U _data `ui `ux ]
+"62
 }
 "58
 [e ++ . *U _uc_ptr 3 -> -> 1 `i `uc ]
 [e :U 593 ]
 [e $ < -> . *U _uc_ptr 3 `i -> _length `i 590  ]
 [e :U 591 ]
-"60
-}
-[; ;my_uart.c: 60: }
-[; ;my_uart.c: 61: uc_ptr->txBufind = 0;
-"61
-[e = . *U _uc_ptr 4 -> -> 0 `i `uc ]
-[; ;my_uart.c: 62: PIE1bits.TX1IE = 1;
 "62
-[e = . . _PIE1bits 1 2 -> -> 1 `i `uc ]
-[; ;my_uart.c: 63: }
+}
+[; ;my_uart.c: 62: }
+[; ;my_uart.c: 63: uc_ptr->txBufind = 0;
 "63
+[e = . *U _uc_ptr 4 -> -> 0 `i `uc ]
+[; ;my_uart.c: 64: PIE1bits.TX1IE = 1;
+"64
+[e = . . _PIE1bits 1 2 -> -> 1 `i `uc ]
+[; ;my_uart.c: 65: }
+"65
 [e :UE 589 ]
 }
-"66
+"68
 [v _uart_trans_int_handler `(v ~T0 @X0 1 ef ]
 {
-[; ;my_uart.c: 66: void uart_trans_int_handler(){
+[; ;my_uart.c: 68: void uart_trans_int_handler(){
 [e :U _uart_trans_int_handler ]
 [f ]
-[; ;my_uart.c: 68: if(TXSTAbits.TRMT){
-"68
+[; ;my_uart.c: 70: if(TXSTAbits.TRMT){
+"70
 [e $ ! != -> . . _TXSTAbits 0 1 `i -> -> -> 0 `i `Vuc `i 595  ]
 {
-[; ;my_uart.c: 69: if(uc_ptr->txBufind < uc_ptr->txBuflen){
-"69
+[; ;my_uart.c: 71: if(uc_ptr->txBufind < uc_ptr->txBuflen){
+"71
 [e $ ! < -> . *U _uc_ptr 4 `i -> . *U _uc_ptr 3 `i 596  ]
 {
-[; ;my_uart.c: 70: TXREG = uc_ptr->txBuff[uc_ptr->txBufind];
-"70
-[e = _TXREG *U + &U . *U _uc_ptr 2 * -> . *U _uc_ptr 4 `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux ]
-[; ;my_uart.c: 71: uc_ptr->txBufind++;
-"71
-[e ++ . *U _uc_ptr 4 -> -> 1 `i `uc ]
+[; ;my_uart.c: 72: TXREG = uc_ptr->txBuff[uc_ptr->txBufind];
 "72
+[e = _TXREG *U + &U . *U _uc_ptr 2 * -> . *U _uc_ptr 4 `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux ]
+[; ;my_uart.c: 74: uc_ptr->txBufind++;
+"74
+[e ++ . *U _uc_ptr 4 -> -> 1 `i `uc ]
+"75
 }
-[; ;my_uart.c: 72: } else
+[; ;my_uart.c: 75: } else
 [e $U 597  ]
 [e :U 596 ]
-[; ;my_uart.c: 73: PIE1bits.TX1IE = 0;
-"73
+[; ;my_uart.c: 76: PIE1bits.TX1IE = 0;
+"76
 [e = . . _PIE1bits 1 2 -> -> 0 `i `uc ]
 [e :U 597 ]
-"74
+"77
 }
 [e :U 595 ]
-[; ;my_uart.c: 74: }
-[; ;my_uart.c: 75: }
-"75
+[; ;my_uart.c: 77: }
+[; ;my_uart.c: 78: }
+"78
 [e :UE 594 ]
 }

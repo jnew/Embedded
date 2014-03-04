@@ -75,11 +75,11 @@
 [v _i2c_int_handler i2c_int_handler `(v  1 e 0 0 ]
 "147
 [v _i2c_master_int_handler i2c_master_int_handler `(v  1 e 0 0 ]
-"243
+"248
 [v _i2c_slave_int_handler i2c_slave_int_handler `(v  1 e 0 0 ]
-"424
+"429
 [v _init_i2c init_i2c `(v  1 e 0 0 ]
-"435
+"440
 [v _i2c_configure_slave i2c_configure_slave `(v  1 e 0 0 ]
 "11 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_uart.c
 [v _uart_recv_int_handler uart_recv_int_handler `(v  1 e 0 0 ]
@@ -87,7 +87,7 @@
 [v _init_uart_recv init_uart_recv `(v  1 e 0 0 ]
 "56
 [v _uart_trans uart_trans `(v  1 e 0 0 ]
-"66
+"68
 [v _uart_trans_int_handler uart_trans_int_handler `(v  1 e 0 0 ]
 "9 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/timer0_thread.c
 [v _timer0_lthread timer0_lthread `(i  1 e 2 0 ]
@@ -131,6 +131,10 @@
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 "8 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
+[v i1___awmod __awmod `(i  1 e 2 0 ]
+[v i1___awmod __awmod `(i  1 e 2 0 ]
+[v i2___awmod __awmod `(i  1 e 2 0 ]
+[v i2___awmod __awmod `(i  1 e 2 0 ]
 "31 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\common\awtofl.c
 [v ___awtofl __awtofl `(d  1 e 3 0 ]
 "32 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\common\awtoft.c
@@ -251,19 +255,19 @@
 [v _OpenUSART OpenUSART `(v  1 e 0 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\pic18\plib\USART\uread.c
 [v _ReadUSART ReadUSART `(uc  1 e 1 0 ]
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
 "101 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/messages.c
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
-[v _ToMainLow_MQ ToMainLow_MQ `S718  1 s 126 ToMainLow_MQ ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
+[v _ToMainLow_MQ ToMainLow_MQ `S718  1 s 67 ToMainLow_MQ ]
 "124
-[v _ToMainHigh_MQ ToMainHigh_MQ `S718  1 s 126 ToMainHigh_MQ ]
+[v _ToMainHigh_MQ ToMainHigh_MQ `S718  1 s 67 ToMainHigh_MQ ]
 "148
-[v _FromMainLow_MQ FromMainLow_MQ `S718  1 s 126 FromMainLow_MQ ]
+[v _FromMainLow_MQ FromMainLow_MQ `S718  1 s 67 FromMainLow_MQ ]
 "172
-[v _FromMainHigh_MQ FromMainHigh_MQ `S718  1 s 126 FromMainHigh_MQ ]
+[v _FromMainHigh_MQ FromMainHigh_MQ `S718  1 s 67 FromMainHigh_MQ ]
 "192
 [v _MQ_Main_Willing_to_block MQ_Main_Willing_to_block `uc  1 s 1 MQ_Main_Willing_to_block ]
-[s S284 __i2c_comm 65 `[28]uc 1 buffer 28 0 `uc 1 buflen 1 28 `uc 1 bufind 1 29 `uc 1 event_count 1 30 `uc 1 status 1 31 `uc 1 error_code 1 32 `uc 1 error_count 1 33 `[28]uc 1 outbuffer 28 34 `uc 1 outbuflen 1 62 `uc 1 outbufind 1 63 `uc 1 slave_addr 1 64 ]
+[s S284 __i2c_comm 29 `[10]uc 1 buffer 10 0 `uc 1 buflen 1 10 `uc 1 bufind 1 11 `uc 1 event_count 1 12 `uc 1 status 1 13 `uc 1 error_code 1 14 `uc 1 error_count 1 15 `[10]uc 1 outbuffer 10 16 `uc 1 outbuflen 1 26 `uc 1 outbufind 1 27 `uc 1 slave_addr 1 28 ]
 "10 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_i2c.c
 [v _ic_ptr ic_ptr `*.39S284  1 s 2 ic_ptr ]
 [s S278 __uart_comm 13 `[5]uc 1 buffer 5 0 `uc 1 buflen 1 5 `[5]uc 1 txBuff 5 6 `uc 1 txBuflen 1 11 `uc 1 txBufind 1 12 ]
@@ -277,7 +281,7 @@
 [v _LATA LATA `VEuc  1 e 1 @3977 ]
 "2065
 [v _LATB LATB `VEuc  1 e 1 @3978 ]
-[s S540 . 1 `uc 1 LATB0 1 0 :1:0 
+[s S563 . 1 `uc 1 LATB0 1 0 :1:0 
 `uc 1 LATB1 1 0 :1:1 
 `uc 1 LATB2 1 0 :1:2 
 `uc 1 LATB3 1 0 :1:3 
@@ -287,31 +291,31 @@
 `uc 1 LATB7 1 0 :1:7 
 ]
 "2113
-[s S549 . 1 `uc 1 LB0 1 0 :1:0 
+[s S572 . 1 `uc 1 LB0 1 0 :1:0 
 ]
-[s S551 . 1 `uc 1 . 1 0 :1:0 
+[s S574 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 LB1 1 0 :1:1 
 ]
-[s S554 . 1 `uc 1 . 1 0 :2:0 
+[s S577 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 LB2 1 0 :1:2 
 ]
-[s S557 . 1 `uc 1 . 1 0 :3:0 
+[s S580 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 LB3 1 0 :1:3 
 ]
-[s S560 . 1 `uc 1 . 1 0 :4:0 
+[s S583 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 LB4 1 0 :1:4 
 ]
-[s S563 . 1 `uc 1 . 1 0 :5:0 
+[s S586 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 LB5 1 0 :1:5 
 ]
-[s S566 . 1 `uc 1 . 1 0 :6:0 
+[s S589 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 LB6 1 0 :1:6 
 ]
-[s S569 . 1 `uc 1 . 1 0 :7:0 
+[s S592 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 LB7 1 0 :1:7 
 ]
-[u S572 . 1 `S540 1 . 1 0 `S549 1 . 1 0 `S551 1 . 1 0 `S554 1 . 1 0 `S557 1 . 1 0 `S560 1 . 1 0 `S563 1 . 1 0 `S566 1 . 1 0 `S569 1 . 1 0 ]
-[v _LATBbits LATBbits `VES572  1 e 1 @3978 ]
+[u S595 . 1 `S563 1 . 1 0 `S572 1 . 1 0 `S574 1 . 1 0 `S577 1 . 1 0 `S580 1 . 1 0 `S583 1 . 1 0 `S586 1 . 1 0 `S589 1 . 1 0 `S592 1 . 1 0 ]
+[v _LATBbits LATBbits `VES595  1 e 1 @3978 ]
 "2569
 [v _TRISA TRISA `VEuc  1 e 1 @3986 ]
 "2722
@@ -492,7 +496,7 @@
 [v _ADRESH ADRESH `VEuc  1 e 1 @4036 ]
 "5883
 [v _SSPCON2 SSPCON2 `VEuc  1 e 1 @4037 ]
-[s S1045 . 1 `uc 1 SEN 1 0 :1:0 
+[s S1002 . 1 `uc 1 SEN 1 0 :1:0 
 `uc 1 RSEN 1 0 :1:1 
 `uc 1 PEN 1 0 :1:2 
 `uc 1 RCEN 1 0 :1:3 
@@ -502,61 +506,61 @@
 `uc 1 GCEN 1 0 :1:7 
 ]
 "5976
-[s S1054 . 1 `uc 1 . 1 0 :5:0 
+[s S1011 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 ACKDT1 1 0 :1:5 
 ]
-[s S1057 . 1 `uc 1 . 1 0 :4:0 
+[s S1014 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 ACKEN1 1 0 :1:4 
 ]
-[s S1060 . 1 `uc 1 . 1 0 :6:0 
+[s S1017 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 ACKSTAT1 1 0 :1:6 
 ]
-[s S1063 . 1 `uc 1 . 1 0 :1:0 
+[s S1020 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 ADMSK1 1 0 :1:1 
 ]
-[s S1066 . 1 `uc 1 . 1 0 :1:0 
+[s S1023 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 ADMSK11 1 0 :1:1 
 ]
-[s S1069 . 1 `uc 1 . 1 0 :2:0 
+[s S1026 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 ADMSK2 1 0 :1:2 
 ]
-[s S1072 . 1 `uc 1 . 1 0 :2:0 
+[s S1029 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 ADMSK21 1 0 :1:2 
 ]
-[s S1075 . 1 `uc 1 . 1 0 :3:0 
+[s S1032 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 ADMSK3 1 0 :1:3 
 ]
-[s S1078 . 1 `uc 1 . 1 0 :3:0 
+[s S1035 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 ADMSK31 1 0 :1:3 
 ]
-[s S1081 . 1 `uc 1 . 1 0 :4:0 
+[s S1038 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 ADMSK4 1 0 :1:4 
 ]
-[s S1084 . 1 `uc 1 . 1 0 :4:0 
+[s S1041 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 ADMSK41 1 0 :1:4 
 ]
-[s S1087 . 1 `uc 1 . 1 0 :5:0 
+[s S1044 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 ADMSK5 1 0 :1:5 
 ]
-[s S1090 . 1 `uc 1 . 1 0 :5:0 
+[s S1047 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 ADMSK51 1 0 :1:5 
 ]
-[s S1093 . 1 `uc 1 . 1 0 :7:0 
+[s S1050 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 GCEN1 1 0 :1:7 
 ]
-[s S1096 . 1 `uc 1 . 1 0 :2:0 
+[s S1053 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 PEN1 1 0 :1:2 
 ]
-[s S1099 . 1 `uc 1 . 1 0 :3:0 
+[s S1056 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 RCEN1 1 0 :1:3 
 ]
-[s S1102 . 1 `uc 1 . 1 0 :1:0 
+[s S1059 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 RSEN1 1 0 :1:1 
 ]
-[s S1105 . 1 `uc 1 SEN1 1 0 :1:0 
+[s S1062 . 1 `uc 1 SEN1 1 0 :1:0 
 ]
-[u S1107 . 1 `S1045 1 . 1 0 `S1054 1 . 1 0 `S1057 1 . 1 0 `S1060 1 . 1 0 `S1063 1 . 1 0 `S1066 1 . 1 0 `S1069 1 . 1 0 `S1072 1 . 1 0 `S1075 1 . 1 0 `S1078 1 . 1 0 `S1081 1 . 1 0 `S1084 1 . 1 0 `S1087 1 . 1 0 `S1090 1 . 1 0 `S1093 1 . 1 0 `S1096 1 . 1 0 `S1099 1 . 1 0 `S1102 1 . 1 0 `S1105 1 . 1 0 ]
-[v _SSPCON2bits SSPCON2bits `VES1107  1 e 1 @4037 ]
+[u S1064 . 1 `S1002 1 . 1 0 `S1011 1 . 1 0 `S1014 1 . 1 0 `S1017 1 . 1 0 `S1020 1 . 1 0 `S1023 1 . 1 0 `S1026 1 . 1 0 `S1029 1 . 1 0 `S1032 1 . 1 0 `S1035 1 . 1 0 `S1038 1 . 1 0 `S1041 1 . 1 0 `S1044 1 . 1 0 `S1047 1 . 1 0 `S1050 1 . 1 0 `S1053 1 . 1 0 `S1056 1 . 1 0 `S1059 1 . 1 0 `S1062 1 . 1 0 ]
+[v _SSPCON2bits SSPCON2bits `VES1064  1 e 1 @4037 ]
 "6326
 [v _SSPCON1 SSPCON1 `VEuc  1 e 1 @4038 ]
 [s S922 . 1 `uc 1 SSPM 1 0 :4:0 
@@ -598,14 +602,14 @@
 [v _SSPCON1bits SSPCON1bits `VES956  1 e 1 @4038 ]
 "6605
 [v _SSPSTAT SSPSTAT `VEuc  1 e 1 @4039 ]
-[s S1191 . 1 `uc 1 . 1 0 :2:0 
+[s S1148 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_NOT_W 1 0 :1:2 
 ]
 "6743
-[s S1194 . 1 `uc 1 . 1 0 :5:0 
+[s S1151 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 D_NOT_A 1 0 :1:5 
 ]
-[s S1197 . 1 `uc 1 BF 1 0 :1:0 
+[s S1154 . 1 `uc 1 BF 1 0 :1:0 
 `uc 1 UA 1 0 :1:1 
 `uc 1 R_nW 1 0 :1:2 
 `uc 1 S 1 0 :1:3 
@@ -614,86 +618,86 @@
 `uc 1 CKE 1 0 :1:6 
 `uc 1 SMP 1 0 :1:7 
 ]
-[s S1212 . 1 `uc 1 . 1 0 :2:0 
+[s S1169 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D_A 1 0 :1:5 
 ]
-[s S1217 . 1 `uc 1 . 1 0 :2:0 
+[s S1174 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 I2C_READ 1 0 :1:2 
 `uc 1 I2C_START 1 0 :1:3 
 `uc 1 I2C_STOP 1 0 :1:4 
 `uc 1 I2C_DAT 1 0 :1:5 
 ]
-[s S1223 . 1 `uc 1 . 1 0 :2:0 
+[s S1180 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nA 1 0 :1:5 
 ]
-[s S1228 . 1 `uc 1 . 1 0 :2:0 
+[s S1185 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_WRITE 1 0 :1:2 
 ]
-[s S1231 . 1 `uc 1 . 1 0 :5:0 
+[s S1188 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 NOT_ADDRESS 1 0 :1:5 
 ]
-[s S1234 . 1 `uc 1 . 1 0 :2:0 
+[s S1191 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nWRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nADDRESS 1 0 :1:5 
 ]
-[s S1239 . 1 `uc 1 . 1 0 :2:0 
+[s S1196 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 READ_WRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 DATA_ADDRESS 1 0 :1:5 
 ]
-[s S1244 . 1 `uc 1 . 1 0 :2:0 
+[s S1201 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D 1 0 :1:5 
 ]
-[s S1249 . 1 `uc 1 . 1 0 :5:0 
+[s S1206 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 DA 1 0 :1:5 
 ]
-[s S1252 . 1 `uc 1 . 1 0 :2:0 
+[s S1209 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 RW 1 0 :1:2 
 ]
-[s S1255 . 1 `uc 1 . 1 0 :3:0 
+[s S1212 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 START 1 0 :1:3 
 ]
-[s S1258 . 1 `uc 1 . 1 0 :4:0 
+[s S1215 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 STOP 1 0 :1:4 
 ]
-[s S1261 . 1 `uc 1 . 1 0 :2:0 
+[s S1218 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_W 1 0 :1:2 
 ]
-[s S1264 . 1 `uc 1 . 1 0 :5:0 
+[s S1221 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 NOT_A 1 0 :1:5 
 ]
-[s S1267 . 1 `uc 1 BF1 1 0 :1:0 
+[s S1224 . 1 `uc 1 BF1 1 0 :1:0 
 ]
-[s S1269 . 1 `uc 1 . 1 0 :6:0 
+[s S1226 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 CKE1 1 0 :1:6 
 ]
-[s S1272 . 1 `uc 1 . 1 0 :5:0 
+[s S1229 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 DA1 1 0 :1:5 
 ]
-[s S1275 . 1 `uc 1 . 1 0 :2:0 
+[s S1232 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 RW1 1 0 :1:2 
 ]
-[s S1278 . 1 `uc 1 . 1 0 :7:0 
+[s S1235 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 SMP1 1 0 :1:7 
 ]
-[s S1281 . 1 `uc 1 . 1 0 :3:0 
+[s S1238 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 START1 1 0 :1:3 
 ]
-[s S1284 . 1 `uc 1 . 1 0 :4:0 
+[s S1241 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 STOP1 1 0 :1:4 
 ]
-[s S1287 . 1 `uc 1 . 1 0 :1:0 
+[s S1244 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 UA1 1 0 :1:1 
 ]
-[u S1290 . 1 `S1191 1 . 1 0 `S1194 1 . 1 0 `S1197 1 . 1 0 `S1191 1 . 1 0 `S1194 1 . 1 0 `S1212 1 . 1 0 `S1217 1 . 1 0 `S1223 1 . 1 0 `S1228 1 . 1 0 `S1231 1 . 1 0 `S1234 1 . 1 0 `S1239 1 . 1 0 `S1244 1 . 1 0 `S1249 1 . 1 0 `S1252 1 . 1 0 `S1255 1 . 1 0 `S1258 1 . 1 0 `S1261 1 . 1 0 `S1264 1 . 1 0 `S1267 1 . 1 0 `S1269 1 . 1 0 `S1272 1 . 1 0 `S1275 1 . 1 0 `S1278 1 . 1 0 `S1281 1 . 1 0 `S1284 1 . 1 0 `S1287 1 . 1 0 ]
-[v _SSPSTATbits SSPSTATbits `VES1290  1 e 1 @4039 ]
+[u S1247 . 1 `S1148 1 . 1 0 `S1151 1 . 1 0 `S1154 1 . 1 0 `S1148 1 . 1 0 `S1151 1 . 1 0 `S1169 1 . 1 0 `S1174 1 . 1 0 `S1180 1 . 1 0 `S1185 1 . 1 0 `S1188 1 . 1 0 `S1191 1 . 1 0 `S1196 1 . 1 0 `S1201 1 . 1 0 `S1206 1 . 1 0 `S1209 1 . 1 0 `S1212 1 . 1 0 `S1215 1 . 1 0 `S1218 1 . 1 0 `S1221 1 . 1 0 `S1224 1 . 1 0 `S1226 1 . 1 0 `S1229 1 . 1 0 `S1232 1 . 1 0 `S1235 1 . 1 0 `S1238 1 . 1 0 `S1241 1 . 1 0 `S1244 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES1247  1 e 1 @4039 ]
 "7278
 [v _SSPADD SSPADD `VEuc  1 e 1 @4040 ]
 "7583
@@ -853,31 +857,31 @@
 "186 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/main.c
 [v _main main `(v  1 e 0 0 ]
 {
-[s S284 __i2c_comm 65 `[28]uc 1 buffer 28 0 `uc 1 buflen 1 28 `uc 1 bufind 1 29 `uc 1 event_count 1 30 `uc 1 status 1 31 `uc 1 error_code 1 32 `uc 1 error_count 1 33 `[28]uc 1 outbuffer 28 34 `uc 1 outbuflen 1 62 `uc 1 outbufind 1 63 `uc 1 slave_addr 1 64 ]
+[s S284 __i2c_comm 29 `[10]uc 1 buffer 10 0 `uc 1 buflen 1 10 `uc 1 bufind 1 11 `uc 1 event_count 1 12 `uc 1 status 1 13 `uc 1 error_code 1 14 `uc 1 error_count 1 15 `[10]uc 1 outbuffer 10 16 `uc 1 outbuflen 1 26 `uc 1 outbufind 1 27 `uc 1 slave_addr 1 28 ]
 "192
-[v main@ic ic `S284  1 a 65 53 ]
-"193
-[v main@msgbuffer msgbuffer `[29]uc  1 a 29 4 ]
+[v main@ic ic `S284  1 a 29 33 ]
 [s S278 __uart_comm 13 `[5]uc 1 buffer 5 0 `uc 1 buflen 1 5 `[5]uc 1 txBuff 5 6 `uc 1 txBuflen 1 11 `uc 1 txBufind 1 12 ]
 "191
-[v main@uc uc `S278  1 a 13 39 ]
+[v main@uc uc `S278  1 a 13 20 ]
+"193
+[v main@msgbuffer msgbuffer `[11]uc  1 a 11 3 ]
 [s S298 __timer1_thread_struct 2 `ui 1 msgcount 2 0 ]
 "196
-[v main@t1thread_data t1thread_data `S298  1 a 2 36 ]
+[v main@t1thread_data t1thread_data `S298  1 a 2 16 ]
 [s S300 __timer0_thread_struct 2 `i 1 data 2 0 ]
 "197
-[v main@t0thread_data t0thread_data `S300  1 a 2 34 ]
+[v main@t0thread_data t0thread_data `S300  1 a 2 14 ]
 "366
-[v main@msg msg `[2]uc  1 a 2 2 ]
+[v main@msg msg `[2]uc  1 a 2 0 ]
 "188
-[v main@length length `c  1 a 1 52 ]
+[v main@length length `c  1 a 1 19 ]
 "189
-[v main@msgtype msgtype `uc  1 a 1 38 ]
+[v main@msgtype msgtype `uc  1 a 1 18 ]
 "190
-[v main@last_reg_recvd last_reg_recvd `uc  1 a 1 33 ]
+[v main@last_reg_recvd last_reg_recvd `uc  1 a 1 2 ]
 "355
 [v main@F5211 F5211 `[2]uc  1 s 2 F5211 ]
-"464
+"467
 } 0
 "56 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_uart.c
 [v _uart_trans uart_trans `(v  1 e 0 0 ]
@@ -887,13 +891,13 @@
 [v uart_trans@data data `*.39uc  1 p 2 45 ]
 "58
 [v uart_trans@length length `uc  1 a 1 49 ]
-"63
+"65
 } 0
 "14 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/timer1_thread.c
 [v _timer1_lthread timer1_lthread `(i  1 e 2 0 ]
 {
 "15
-[v timer1_lthread@retval retval `c  1 a 1 80 ]
+[v timer1_lthread@retval retval `c  1 a 1 1 ]
 [s S298 __timer1_thread_struct 2 `ui 1 msgcount 2 0 ]
 "14
 [v timer1_lthread@tptr tptr `*.39S298  1 p 2 71 ]
@@ -926,7 +930,7 @@
 "24
 [v _send_msg send_msg `(c  1 e 1 0 ]
 {
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
 "27
 [v send_msg@qmsg qmsg `*.39S713  1 a 2 65 ]
 "28
@@ -934,7 +938,7 @@
 "25
 [v send_msg@slot slot `uc  1 a 1 64 ]
 "24
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v send_msg@qptr qptr `*.39S718  1 p 2 55 ]
 [v send_msg@length length `uc  1 p 1 57 ]
 [v send_msg@msgtype msgtype `uc  1 p 1 58 ]
@@ -978,18 +982,18 @@
 {
 "15
 [v init_queue@i i `uc  1 a 1 48 ]
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
 "14
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v init_queue@qptr qptr `*.39S718  1 p 2 45 ]
 "22
 } 0
-"424 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_i2c.c
+"429 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_i2c.c
 [v _init_i2c init_i2c `(v  1 e 0 0 ]
 {
-[s S284 __i2c_comm 65 `[28]uc 1 buffer 28 0 `uc 1 buflen 1 28 `uc 1 bufind 1 29 `uc 1 event_count 1 30 `uc 1 status 1 31 `uc 1 error_code 1 32 `uc 1 error_count 1 33 `[28]uc 1 outbuffer 28 34 `uc 1 outbuflen 1 62 `uc 1 outbufind 1 63 `uc 1 slave_addr 1 64 ]
+[s S284 __i2c_comm 29 `[10]uc 1 buffer 10 0 `uc 1 buflen 1 10 `uc 1 bufind 1 11 `uc 1 event_count 1 12 `uc 1 status 1 13 `uc 1 error_code 1 14 `uc 1 error_count 1 15 `[10]uc 1 outbuffer 10 16 `uc 1 outbuflen 1 26 `uc 1 outbufind 1 27 `uc 1 slave_addr 1 28 ]
 [v init_i2c@ic ic `*.39S284  1 p 2 45 ]
-"430
+"435
 } 0
 "44
 [v _i2c_master_send i2c_master_send `(uc  1 e 1 0 ]
@@ -999,6 +1003,7 @@
 [v i2c_master_send@recvlength recvlength `uc  1 p 1 45 ]
 [v i2c_master_send@msg msg `*.39uc  1 p 2 46 ]
 [v i2c_master_send@slave_addr slave_addr `uc  1 p 1 48 ]
+"46
 [v i2c_master_send@sendlength sendlength `uc  1 a 1 51 ]
 "59
 } 0
@@ -1035,8 +1040,8 @@
 "222 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/messages.c
 [v _check_msg check_msg `(uc  1 e 1 0 ]
 {
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v check_msg@qptr qptr `*.39S718  1 p 2 45 ]
 "224
 } 0
@@ -1073,7 +1078,7 @@
 "63
 [v _recv_msg recv_msg `(c  1 e 1 0 ]
 {
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
 "68
 [v recv_msg@qmsg qmsg `*.39S713  1 a 2 67 ]
 "69
@@ -1081,7 +1086,7 @@
 "64
 [v recv_msg@slot slot `uc  1 a 1 64 ]
 "63
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v recv_msg@qptr qptr `*.39S718  1 p 2 55 ]
 [v recv_msg@maxlength maxlength `uc  1 p 1 57 ]
 [v recv_msg@msgtype msgtype `*.39uc  1 p 2 58 ]
@@ -1100,6 +1105,17 @@
 [v memcpy@s1 s1 `*.39Cv  1 p 2 47 ]
 [v memcpy@n n `ui  1 p 2 49 ]
 "32
+} 0
+"8 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+{
+"11
+[v ___awmod@sign sign `uc  1 a 1 51 ]
+[v ___awmod@counter counter `uc  1 a 1 50 ]
+"8
+[v ___awmod@dividend dividend `i  1 p 2 45 ]
+[v ___awmod@divisor divisor `i  1 p 2 47 ]
+"35
 } 0
 "30 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\pic18\plib\ADC\adcsetch.c
 [v _SetChanADC SetChanADC `(v  1 e 0 0 ]
@@ -1156,10 +1172,10 @@
 {
 "153
 } 0
-"66 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_uart.c
+"68 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/my_uart.c
 [v _uart_trans_int_handler uart_trans_int_handler `(v  1 e 0 0 ]
 {
-"75
+"78
 } 0
 "11
 [v _uart_recv_int_handler uart_recv_int_handler `(v  1 e 0 0 ]
@@ -1180,11 +1196,11 @@
 "24
 [v i1_send_msg send_msg `(c  1 e 1 0 ]
 {
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
 [v i1send_msg@qmsg send_msg `*.39S713  1 a 2 20 ]
 [v i1send_msg@tlength send_msg `ui  1 a 2 17 ]
 [v i1send_msg@slot send_msg `uc  1 a 1 19 ]
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v i1send_msg@qptr qptr `*.39S718  1 p 2 10 ]
 [v i1send_msg@length length `uc  1 p 1 12 ]
 [v i1send_msg@msgtype msgtype `uc  1 p 1 13 ]
@@ -1200,6 +1216,15 @@
 [v i1memcpy@s1 s1 `*.39Cv  1 p 2 2 ]
 [v i1memcpy@n n `ui  1 p 2 4 ]
 "32
+} 0
+"8 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\common\awmod.c
+[v i1___awmod __awmod `(i  1 e 2 0 ]
+{
+[v i1___awmod@sign __awmod `uc  1 a 1 6 ]
+[v i1___awmod@counter __awmod `uc  1 a 1 5 ]
+[v i1___awmod@dividend dividend `i  1 p 2 0 ]
+[v i1___awmod@divisor divisor `i  1 p 2 2 ]
+"35
 } 0
 "15 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\pic18\plib\USART\uread.c
 [v _ReadUSART ReadUSART `(uc  1 e 1 0 ]
@@ -1261,7 +1286,7 @@
 "147
 [v _i2c_master_int_handler i2c_master_int_handler `(v  1 e 0 0 ]
 {
-"241
+"246
 } 0
 "74
 [v _i2c_master_recv i2c_master_recv `(uc  1 e 1 0 ]
@@ -1286,11 +1311,11 @@
 "24
 [v i2_send_msg send_msg `(c  1 e 1 0 ]
 {
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
 [v i2send_msg@qmsg send_msg `*.39S713  1 a 2 20 ]
 [v i2send_msg@tlength send_msg `ui  1 a 2 17 ]
 [v i2send_msg@slot send_msg `uc  1 a 1 19 ]
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v i2send_msg@qptr qptr `*.39S718  1 p 2 10 ]
 [v i2send_msg@length length `uc  1 p 1 12 ]
 [v i2send_msg@msgtype msgtype `uc  1 p 1 13 ]
@@ -1306,6 +1331,15 @@
 [v i2memcpy@s1 s1 `*.39Cv  1 p 2 2 ]
 [v i2memcpy@n n `ui  1 p 2 4 ]
 "32
+} 0
+"8 C:\Program Files (x86)\Microchip\xc8\v1.30\sources\common\awmod.c
+[v i2___awmod __awmod `(i  1 e 2 0 ]
+{
+[v i2___awmod@sign __awmod `uc  1 a 1 6 ]
+[v i2___awmod@counter __awmod `uc  1 a 1 5 ]
+[v i2___awmod@dividend dividend `i  1 p 2 0 ]
+[v i2___awmod@divisor divisor `i  1 p 2 2 ]
+"35
 } 0
 "228 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/messages.c
 [v _SleepIfOkay SleepIfOkay `(v  1 e 0 0 ]
@@ -1325,8 +1359,8 @@
 "222 C:\Users\Devon\Documents\GitHub\Embedded\PICFramework3 (I2C Master working)\src/src/messages.c
 [v i2_check_msg check_msg `(uc  1 e 1 0 ]
 {
-[s S713 __msg 31 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[28]uc 1 data 28 3 ]
-[s S718 __msg_queue 126 `[4]S713 1 queue 124 0 `uc 1 cur_write_ind 1 124 `uc 1 cur_read_ind 1 125 ]
+[s S713 __msg 13 `uc 1 full 1 0 `uc 1 length 1 1 `uc 1 msgtype 1 2 `[10]uc 1 data 10 3 ]
+[s S718 __msg_queue 67 `[5]S713 1 queue 65 0 `uc 1 cur_write_ind 1 65 `uc 1 cur_read_ind 1 66 ]
 [v i2check_msg@qptr qptr `*.39S718  1 p 2 0 ]
 "224
 } 0

@@ -4636,10 +4636,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 11: unsigned char full;
 [; ;messages.h: 12: unsigned char length;
 [; ;messages.h: 13: unsigned char msgtype;
-[; ;messages.h: 14: unsigned char data[28];
+[; ;messages.h: 14: unsigned char data[10];
 [; ;messages.h: 15: } msg;
 [; ;messages.h: 17: typedef struct __msg_queue {
-[; ;messages.h: 18: msg queue[4];
+[; ;messages.h: 18: msg queue[5];
 [; ;messages.h: 19: unsigned char cur_write_ind;
 [; ;messages.h: 20: unsigned char cur_read_ind;
 [; ;messages.h: 21: } msg_queue;
@@ -4666,14 +4666,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.h: 21: void uart_trans(unsigned char, unsigned char *);
 [; ;my_uart.h: 22: void uart_trans_int_handler();
 [; ;my_i2c.h: 7: typedef struct __i2c_comm {
-[; ;my_i2c.h: 8: unsigned char buffer[28];
+[; ;my_i2c.h: 8: unsigned char buffer[10];
 [; ;my_i2c.h: 9: unsigned char buflen;
 [; ;my_i2c.h: 10: unsigned char bufind;
 [; ;my_i2c.h: 11: unsigned char event_count;
 [; ;my_i2c.h: 12: unsigned char status;
 [; ;my_i2c.h: 13: unsigned char error_code;
 [; ;my_i2c.h: 14: unsigned char error_count;
-[; ;my_i2c.h: 15: unsigned char outbuffer[28];
+[; ;my_i2c.h: 15: unsigned char outbuffer[10];
 [; ;my_i2c.h: 16: unsigned char outbuflen;
 [; ;my_i2c.h: 17: unsigned char outbufind;
 [; ;my_i2c.h: 18: unsigned char slave_addr;

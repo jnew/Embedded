@@ -5972,11 +5972,11 @@ typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[28];
+unsigned char data[10];
 } msg;
 
 typedef struct __msg_queue {
-msg queue[4];
+msg queue[5];
 unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;

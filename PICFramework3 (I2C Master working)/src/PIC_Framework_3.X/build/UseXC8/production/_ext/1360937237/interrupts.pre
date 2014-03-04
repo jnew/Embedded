@@ -5928,11 +5928,11 @@ typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[28];
+unsigned char data[10];
 } msg;
 
 typedef struct __msg_queue {
-msg queue[4];
+msg queue[5];
 unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;
@@ -5981,14 +5981,14 @@ void uart_trans_int_handler();
 
 # 7 "../src/my_i2c.h"
 typedef struct __i2c_comm {
-unsigned char buffer[28];
+unsigned char buffer[10];
 unsigned char buflen;
 unsigned char bufind;
 unsigned char event_count;
 unsigned char status;
 unsigned char error_code;
 unsigned char error_count;
-unsigned char outbuffer[28];
+unsigned char outbuffer[10];
 unsigned char outbuflen;
 unsigned char outbufind;
 unsigned char slave_addr;

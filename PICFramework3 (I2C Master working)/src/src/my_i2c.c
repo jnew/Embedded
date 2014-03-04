@@ -42,7 +42,7 @@ void i2c_configure_master() {
 //   the structure to which ic_ptr points [there is already a suitable buffer there].
 
 unsigned char i2c_master_send(unsigned char sendlength, unsigned char recvlength, unsigned char *msg, unsigned char slave_addr) {
-    LATBbits.LATB2 = 1;
+    
     for (ic_ptr->outbuflen = 0; ic_ptr->outbuflen < sendlength; ic_ptr->outbuflen++) {
         ic_ptr->outbuffer[ic_ptr->outbuflen] = msg[ic_ptr->outbuflen];
     }
@@ -190,8 +190,10 @@ void i2c_master_int_handler() {
                   ic_ptr->status = I2C_ACK;
                 } else {
                     // if we get a NACK send a msg
-                    LATBbits.LATB2 = 1;
+                    if(ic_ptr->buffer[4] == 0x78)
+                        LATBbits.LATB2 = 1;
                     ToMainHigh_sendmsg(0, MSGT_I2C_MASTER_RECV_FAILED, ic_ptr->buffer);
+                    LATBbits.LATB2 = 0;
                     ic_ptr->buflen = 0; // we don't want any data if it fails
                     ic_ptr->status = I2C_IDLE;
                 }
@@ -201,14 +203,13 @@ void i2c_master_int_handler() {
             {
                 LATBbits.LATB1 = 1;
                 LATBbits.LATB1 = 0;
-                if(ic_ptr->buflen > ic_ptr->bufind+1){
+                if(ic_ptr->bufind < ic_ptr->buflen){
                     ic_ptr->buffer[ic_ptr->bufind] = SSPBUF;
                     ic_ptr->bufind++;
                     ic_ptr->status = I2C_RCV_DATA;
-                    // ACK
-                    SSPCON2bits.ACKDT = 0;
-                    SSPCON2bits.ACKEN = 1;
-                }else{ // no more data
+                    
+                }
+                if(ic_ptr->bufind == ic_ptr->buflen){ // no more data
                     ic_ptr->status = I2C_END_WRITE;
 
                     // send the buffer to main
@@ -216,6 +217,10 @@ void i2c_master_int_handler() {
 
                     // NACK
                     SSPCON2bits.ACKDT = 1;
+                    SSPCON2bits.ACKEN = 1;
+                } else {
+                    // ACK
+                    SSPCON2bits.ACKDT = 0;
                     SSPCON2bits.ACKEN = 1;
                 }
                 break;

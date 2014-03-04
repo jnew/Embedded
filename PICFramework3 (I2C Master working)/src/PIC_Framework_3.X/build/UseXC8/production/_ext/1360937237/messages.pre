@@ -5921,11 +5921,11 @@ typedef struct __msg {
 unsigned char full;
 unsigned char length;
 unsigned char msgtype;
-unsigned char data[28];
+unsigned char data[10];
 } msg;
 
 typedef struct __msg_queue {
-msg queue[4];
+msg queue[5];
 unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;
@@ -5995,7 +5995,7 @@ unsigned char i;
 
 qptr->cur_write_ind = 0;
 qptr->cur_read_ind = 0;
-for (i = 0; i < 4; i++) {
+for (i = 0; i < 5; i++) {
 qptr->queue[i].full = 0;
 }
 }
@@ -6020,7 +6020,7 @@ qmsg->msgtype = msgtype;
 
 # 55
 memcpy(qmsg->data, data, tlength);
-qptr->cur_write_ind = (qptr->cur_write_ind + 1) % 4;
+qptr->cur_write_ind = (qptr->cur_write_ind + 1) % 5;
 
 
 qmsg->full = 1;
@@ -6048,7 +6048,7 @@ tlength = qmsg->length;
 memcpy(data, qmsg->data, tlength);
 
 # 87
-qptr->cur_read_ind = (qptr->cur_read_ind + 1) % 4;
+qptr->cur_read_ind = (qptr->cur_read_ind + 1) % 5;
 
 (*msgtype) = qmsg->msgtype;
 

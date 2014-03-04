@@ -404,7 +404,10 @@ void main(void) {
                 };
                 case MSGT_I2C_MASTER_RECV_COMPLETE:
                 {
+                    //msgbuffer[0] = length;
+                    
                     uart_trans(length, msgbuffer);
+                    
                     //i2c_master_send(1, 5, msg, 0x9E);
                     break;
                 };
@@ -412,7 +415,7 @@ void main(void) {
                 {
                     //unsigned char msg2[2] = {0xEE, 0xFF};
                     //i2c_master_send(1, 5, msg, 0x9E);
-                    LATBbits.LATB2 = 0;
+                    //LATBbits.LATB2 = 0;
                     break;
                 };
                 default:
