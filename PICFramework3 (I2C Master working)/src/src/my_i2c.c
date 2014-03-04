@@ -42,7 +42,7 @@ void i2c_configure_master() {
 //   the structure to which ic_ptr points [there is already a suitable buffer there].
 
 unsigned char i2c_master_send(unsigned char sendlength, unsigned char recvlength, unsigned char *msg, unsigned char slave_addr) {
-
+    LATBbits.LATB2 = 1;
     for (ic_ptr->outbuflen = 0; ic_ptr->outbuflen < sendlength; ic_ptr->outbuflen++) {
         ic_ptr->outbuffer[ic_ptr->outbuflen] = msg[ic_ptr->outbuflen];
     }
@@ -404,11 +404,15 @@ void i2c_slave_int_handler() {
         // send to the queue to *ask* for the data to be sent out
         //ToMainHigh_sendmsg(0, MSGT_I2C_RQST, (void *) ic_ptr->buffer);
         if(ic_ptr->buffer[0] == 0xAA){
-            length = 3;
-
-            // just respond back with whatever you send
+            length = 5;
+            unsigned char sensormsg[5] = {0x01, 0x01, 0x02, 0x03, 0x07};
+            start_i2c_slave_reply(length, sensormsg);
+            //adcbuffer[0] = 0; // reset count after send
+        } else if(ic_ptr->buffer[0] == 0xBA){
+            // motor stuff
+            length = 5;
+            unsigned char motormsg[5] = {0x02, 0x03, 0x04, 0x09};
             start_i2c_slave_reply(length, ic_ptr->buffer);
-            adcbuffer[0] = 0; // reset count after send
         }
         msg_to_send = 0;
     }

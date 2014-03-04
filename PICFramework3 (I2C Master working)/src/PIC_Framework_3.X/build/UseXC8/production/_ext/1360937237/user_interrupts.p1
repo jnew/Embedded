@@ -4604,9 +4604,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
 [; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_uart.h: 10: typedef struct __uart_comm {
-[; ;my_uart.h: 11: unsigned char buffer[4];
+[; ;my_uart.h: 11: unsigned char buffer[5];
 [; ;my_uart.h: 12: unsigned char buflen;
-[; ;my_uart.h: 13: unsigned char txBuff[4];
+[; ;my_uart.h: 13: unsigned char txBuff[5];
 [; ;my_uart.h: 14: unsigned char txBuflen;
 [; ;my_uart.h: 15: unsigned char txBufind;
 [; ;my_uart.h: 16: } uart_comm;

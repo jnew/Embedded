@@ -53,6 +53,8 @@
 
 //I2C stuff
 #define I2CMASTER   //comment out for slave
+#define SENSORPIC
+#define MOTORPIC
 
 #endif
 

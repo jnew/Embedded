@@ -4655,9 +4655,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
 [; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_uart.h: 10: typedef struct __uart_comm {
-[; ;my_uart.h: 11: unsigned char buffer[4];
+[; ;my_uart.h: 11: unsigned char buffer[5];
 [; ;my_uart.h: 12: unsigned char buflen;
-[; ;my_uart.h: 13: unsigned char txBuff[4];
+[; ;my_uart.h: 13: unsigned char txBuff[5];
 [; ;my_uart.h: 14: unsigned char txBuflen;
 [; ;my_uart.h: 15: unsigned char txBufind;
 [; ;my_uart.h: 16: } uart_comm;
@@ -4896,9 +4896,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "141
 [e $ ! != -> . . _PIR1bits 0 4 `i -> -> -> 0 `i `Vuc `i 602  ]
 {
-[; ;interrupts.c: 142: PIR1bits.TXIF = 0;
-"142
-[e = . . _PIR1bits 0 4 -> -> 0 `i `uc ]
 [; ;interrupts.c: 143: uart_trans_int_handler();
 "143
 [e ( _uart_trans_int_handler ..  ]
@@ -4913,14 +4910,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interrupts.c: 147: PIR1bits.RCIF = 0;
 "147
 [e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
-[; ;interrupts.c: 148: uart_recv_int_handler();
-"148
-[e ( _uart_recv_int_handler ..  ]
+[; ;interrupts.c: 149: uart_recv_int_handler();
 "149
+[e ( _uart_recv_int_handler ..  ]
+"151
 }
 [e :U 603 ]
-[; ;interrupts.c: 149: }
 [; ;interrupts.c: 151: }
-"151
+[; ;interrupts.c: 153: }
+"153
 [e :UE 599 ]
 }

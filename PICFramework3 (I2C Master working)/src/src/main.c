@@ -287,10 +287,17 @@ void main(void) {
     // They *are* changed in the timer interrupt handlers if those timers are
     //   enabled.  They are just there to make the lights blink and can be
     //   disabled.
+
 #ifdef I2CMASTER
     i2c_configure_master();
 #else
-    i2c_configure_slave(0x9E);
+#ifdef SENSORPIC
+    i2c_configure_slave(0x9E); // slave addr 4F
+#else
+#ifdef MOTORPIC
+    i2c_configure_slave(0xBE); // slave addr 5F
+#endif
+#endif
 #endif
     
 #else
@@ -357,10 +364,10 @@ void main(void) {
     // they can be equated with the tasks in your task diagram if you
     // structure them properly.
       unsigned char msg[1] = {0x01};
-      //i2c_master_send(1, 5, msg, 0x9E); // send length, recv length, message and address + r/w bit (0)
+     //i2c_master_send(1, 5, msg, 0x9E); // send length, recv length, message and address + r/w bit (0)
       //i2c_master_recv();
       
-      uart_trans(1, msg);
+      //uart_trans(1, msg);
       //WriteUSART(0xAA);
 
     while (1) {
@@ -397,13 +404,13 @@ void main(void) {
                 };
                 case MSGT_I2C_MASTER_RECV_COMPLETE:
                 {
-                    i2c_master_send(1, 5, msg, 0x9E);
+                    //i2c_master_send(1, 5, msg, 0x9E);
                     break;
                 };
                 case MSGT_I2C_MASTER_RECV_FAILED:
                 {
-                    unsigned char msg2[2] = {0xEE, 0xFF};
-                    i2c_master_send(1, 5, msg, 0x9E);
+                    //unsigned char msg2[2] = {0xEE, 0xFF};
+                    //i2c_master_send(1, 5, msg, 0x9E);
                     LATBbits.LATB2 = 0;
                     break;
                 };
@@ -432,8 +439,16 @@ void main(void) {
                 case MSGT_OVERRUN:
                 case MSGT_UART_DATA:
                 {
+                    if(msgbuffer[0] == 0xBA){
+                        // motor command
+                        i2c_master_send(5, 5, msgbuffer, 0xBE);
+                    } else if(msgbuffer[0] == 0xAA){
+                        // sensor command
+                        i2c_master_send(1, 5, msgbuffer, 0x9E);
+                    }
                     
-                    uart_lthread(&uthread_data, msgtype, length, msgbuffer);
+                    LATBbits.LATB2 = 0;
+                    //uart_lthread(&uthread_data, msgtype, length, msgbuffer);
                     break;
                 };
                 default:

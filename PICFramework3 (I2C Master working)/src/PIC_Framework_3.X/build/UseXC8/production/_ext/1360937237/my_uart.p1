@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "10 ../src/my_uart.h
-[s S583 `uc -> 4 `i `uc 1 `uc -> 4 `i `uc 1 `uc 1 ]
+[s S583 `uc -> 5 `i `uc 1 `uc -> 5 `i `uc 1 `uc 1 ]
 [n S583 __uart_comm buffer buflen txBuff txBuflen txBufind ]
 [s S223 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S223 . TMR1IF TMR2IF CCP1IF SSP1IF TXIF RCIF ADIF PSPIF ]
@@ -61,8 +61,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S261 . . . . . . ]
 "4462
 [v _TXSTAbits `VS261 ~T0 @X0 0 e@4012 ]
-"597 C:\Program Files (x86)\Microchip\xc8\v1.30\include\plib\usart.h
-[v _WriteUSART `(v ~T0 @X0 0 ef1`uc ]
+"4704
+[v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
 [; ;htc.h: 22: extern void __builtin_software_breakpoint(void);
 [; ;pic18f45j10.h: 44: extern volatile unsigned char PORTA @ 0xF80;
 "46 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
@@ -4657,9 +4657,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
 [; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_uart.h: 10: typedef struct __uart_comm {
-[; ;my_uart.h: 11: unsigned char buffer[4];
+[; ;my_uart.h: 11: unsigned char buffer[5];
 [; ;my_uart.h: 12: unsigned char buflen;
-[; ;my_uart.h: 13: unsigned char txBuff[4];
+[; ;my_uart.h: 13: unsigned char txBuff[5];
 [; ;my_uart.h: 14: unsigned char txBuflen;
 [; ;my_uart.h: 15: unsigned char txBufind;
 [; ;my_uart.h: 16: } uart_comm;
@@ -4686,9 +4686,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;my_uart.c: 25: uc_ptr->buflen++;
 "25
 [e ++ . *U _uc_ptr 1 -> -> 1 `i `uc ]
-[; ;my_uart.c: 27: if (uc_ptr->buflen == 4) {
+[; ;my_uart.c: 27: if (uc_ptr->buflen == 5) {
 "27
-[e $ ! == -> . *U _uc_ptr 1 `i -> 4 `i 586  ]
+[e $ ! == -> . *U _uc_ptr 1 `i -> 5 `i 586  ]
 {
 [; ;my_uart.c: 28: ToMainLow_sendmsg(uc_ptr->buflen, 31, (void *) uc_ptr->buffer);
 "28
@@ -4790,17 +4790,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 "68
 [e $ ! != -> . . _TXSTAbits 0 1 `i -> -> -> 0 `i `Vuc `i 595  ]
 {
-[; ;my_uart.c: 69: WriteUSART(uc_ptr->txBuff[0]);
+[; ;my_uart.c: 69: if(uc_ptr->txBufind < uc_ptr->txBuflen){
 "69
-[e ( _WriteUSART (1 *U + &U . *U _uc_ptr 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux ]
+[e $ ! < -> . *U _uc_ptr 4 `i -> . *U _uc_ptr 3 `i 596  ]
+{
+[; ;my_uart.c: 70: TXREG = uc_ptr->txBuff[uc_ptr->txBufind];
 "70
+[e = _TXREG *U + &U . *U _uc_ptr 2 * -> . *U _uc_ptr 4 `ux -> -> # *U &U . *U _uc_ptr 2 `ui `ux ]
+[; ;my_uart.c: 71: uc_ptr->txBufind++;
+"71
+[e ++ . *U _uc_ptr 4 -> -> 1 `i `uc ]
+"72
+}
+[; ;my_uart.c: 72: } else
+[e $U 597  ]
+[e :U 596 ]
+[; ;my_uart.c: 73: PIE1bits.TX1IE = 0;
+"73
+[e = . . _PIE1bits 1 2 -> -> 0 `i `uc ]
+[e :U 597 ]
+"74
 }
 [e :U 595 ]
-[; ;my_uart.c: 70: }
-[; ;my_uart.c: 71: PIE1bits.TX1IE = 0;
-"71
-[e = . . _PIE1bits 1 2 -> -> 0 `i `uc ]
-[; ;my_uart.c: 73: }
-"73
+[; ;my_uart.c: 74: }
+[; ;my_uart.c: 75: }
+"75
 [e :UE 594 ]
 }

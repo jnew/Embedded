@@ -6022,9 +6022,9 @@ signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 
 # 10 "../src/my_uart.h"
 typedef struct __uart_comm {
-unsigned char buffer[4];
+unsigned char buffer[5];
 unsigned char buflen;
-unsigned char txBuff[4];
+unsigned char txBuff[5];
 unsigned char txBuflen;
 unsigned char txBufind;
 } uart_comm;
@@ -6169,42 +6169,38 @@ IPR1bits.TXIP = 0;
 
 IPR1bits.SSPIP = 1;
 
-# 291
+# 292
 i2c_configure_master();
 
-# 310
+# 317
 PIE1bits.SSPIE = 1;
 
-# 321
+# 328
 OpenUSART(0b11111111 & 0b11111111 & 0b11111110 & 0b11111101 &
 0b11111111 & 0b11111111, 38);
 RCSTAbits.SPEN = 1;
 TRISC = 0xFF;
 
-# 331
+# 338
 enable_interrupts();
 
-# 345
+# 352
 OpenADC(0b11011111 & 0b01111111 & 0b11110011,
 0b10001111 & 0b01111111 & 0b11111110 & 0b11111101,
 0b1011);
 SetChanADC(0b10001111);
 
-# 359
+# 366
 unsigned char msg[1] = {0x01};
 
-
-
-uart_trans(1, msg);
-
-
+# 373
 while (1) {
 
 
 
 block_on_To_msgqueues();
 
-# 377
+# 384
 length = ToMainHigh_recvmsg(28, &msgtype, (void *) msgbuffer);
 if (length < 0) {
 
@@ -6228,13 +6224,13 @@ break;
 };
 case 45:
 {
-i2c_master_send(1, 5, msg, 0x9E);
+
 break;
 };
 case 46:
 {
-unsigned char msg2[2] = {0xEE, 0xFF};
-i2c_master_send(1, 5, msg, 0x9E);
+
+
 LATBbits.LATB2 = 0;
 break;
 };
@@ -6263,8 +6259,16 @@ break;
 case 30:
 case 31:
 {
+if(msgbuffer[0] == 0xBA){
 
-uart_lthread(&uthread_data, msgtype, length, msgbuffer);
+i2c_master_send(5, 5, msgbuffer, 0xBE);
+} else if(msgbuffer[0] == 0xAA){
+
+i2c_master_send(1, 5, msgbuffer, 0x9E);
+}
+
+LATBbits.LATB2 = 0;
+
 break;
 };
 default:

@@ -5966,9 +5966,9 @@ signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 
 # 10 "../src/my_uart.h"
 typedef struct __uart_comm {
-unsigned char buffer[4];
+unsigned char buffer[5];
 unsigned char buflen;
-unsigned char txBuff[4];
+unsigned char txBuff[5];
 unsigned char txBuflen;
 unsigned char txBufind;
 } uart_comm;
@@ -6093,13 +6093,15 @@ timer1_int_handler();
 }
 
 if (PIR1bits.TXIF) {
-PIR1bits.TXIF = 0;
+
 uart_trans_int_handler();
 }
 
 if (PIR1bits.RCIF) {
 PIR1bits.RCIF = 0;
+
 uart_recv_int_handler();
+
 }
 
 }
