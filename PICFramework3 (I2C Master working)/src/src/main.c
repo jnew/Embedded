@@ -452,7 +452,8 @@ void main(void) {
                 case MSGT_OVERRUN:
                 case MSGT_UART_DATA:
                 {
-                    if(msgbuffer[0] == 0x01){
+                    LATBbits.LATB2 = 1;
+                    if(1){
                         // motor command
                         FromMainLow_sendmsg(length, MSGT_UART_DATA, msgbuffer);
                     }

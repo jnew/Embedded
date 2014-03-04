@@ -23,6 +23,10 @@ void uart_recv_int_handler() {
 #endif
 
         uc_ptr->buflen++;
+        if(uartTimeOut > 200) {
+            uc_ptr->buflen = 1;
+            uartTimeOut = 0;
+        }
         // check if a message should be sent
         if (uc_ptr->buflen == MAXUARTBUF) {
             ToMainLow_sendmsg(uc_ptr->buflen, MSGT_UART_DATA, (void *) uc_ptr->buffer);

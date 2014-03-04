@@ -5925,7 +5925,9 @@ unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;
 
-# 43
+unsigned int uartTimeOut;
+
+# 45
 void init_queues(void);
 
 
@@ -5936,19 +5938,19 @@ void SleepIfOkay(void);
 
 void block_on_To_msgqueues(void);
 
-# 57
+# 59
 signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
 signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
 
-# 64
+# 66
 signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
 signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 
-# 71
+# 73
 signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
 signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
 
-# 78
+# 80
 signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
 signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 
@@ -6380,11 +6382,16 @@ ToMainHigh_sendmsg(5, 32, reply);
 int msgtype;
 unsigned char sensorData[5];
 unsigned char noData[5] = {0x00,0x00,0x00,0x00,0x00};
-FromMainLow_recvmsg(length, (unsigned char *)&msgtype, sensorData);
+length = FromMainLow_recvmsg(5, (unsigned char *)&msgtype, sensorData);
 if(length == 5 && msgtype == 31)
 start_i2c_slave_reply(length, sensorData);
 else
 start_i2c_slave_reply(5, noData);
+} else if(ic_ptr->buffer[0] == 0xBA){
+length = 5;
+unsigned char movecomAck[3] = {0x02, 0x01, 0x01};
+start_i2c_slave_reply(length, movecomAck);
+ToMainHigh_sendmsg(5, 32, ic_ptr->buffer);
 }
 msg_to_send = 0;
 }
@@ -6406,7 +6413,7 @@ ic_ptr->error_count = 0;
 
 void i2c_configure_slave(unsigned char addr) {
 
-# 457
+# 462
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
 
@@ -6425,7 +6432,7 @@ SSPSTAT |= 0b10000000;
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
 
-# 494
+# 499
 SSPCON2bits.SEN = 1;
 SSPCON1 |= 0b00100000;
 

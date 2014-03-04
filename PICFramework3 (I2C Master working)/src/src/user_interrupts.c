@@ -30,8 +30,8 @@ void timer0_int_handler() {
 //        ToMainHigh_sendmsg(sizeof (val), MSGT_TIMER0, (void *) &val);
 //    }
 
-
-    ConvertADC();
+    uartTimeOut++;
+    //ConvertADC();
     //while( BusyADC()) {
         //LATBbits.LATB1 = 1;
     //}

@@ -5918,7 +5918,9 @@ unsigned char cur_write_ind;
 unsigned char cur_read_ind;
 } msg_queue;
 
-# 43
+unsigned int uartTimeOut;
+
+# 45
 void init_queues(void);
 
 
@@ -5929,19 +5931,19 @@ void SleepIfOkay(void);
 
 void block_on_To_msgqueues(void);
 
-# 57
+# 59
 signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
 signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
 
-# 64
+# 66
 signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
 signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 
-# 71
+# 73
 signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
 signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
 
-# 78
+# 80
 signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
 signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 
@@ -5972,6 +5974,10 @@ uc_ptr->buffer[uc_ptr->buflen] = ReadUSART();
 
 
 uc_ptr->buflen++;
+if(uartTimeOut > 200) {
+uc_ptr->buflen = 1;
+uartTimeOut = 0;
+}
 
 if (uc_ptr->buflen == 5) {
 ToMainLow_sendmsg(uc_ptr->buflen, 31, (void *) uc_ptr->buffer);
@@ -5979,7 +5985,7 @@ uc_ptr->buflen = 0;
 }
 }
 
-# 38
+# 42
 if (USART_Status.OVERRUN_ERROR == 1) {
 
 

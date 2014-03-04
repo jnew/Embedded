@@ -408,21 +408,26 @@ void i2c_slave_int_handler() {
         
         // send to the queue to *ask* for the data to be sent out
         //ToMainHigh_sendmsg(0, MSGT_I2C_RQST, (void *) ic_ptr->buffer);
-        if(ic_ptr->buffer[0] == 0xAA){
+        if(ic_ptr->buffer[0] == 0xAA){ //Gather Request
             length = 3;
             unsigned char gatherAck[3] = {0x00, 0x01, 0x01};
             start_i2c_slave_reply(length, gatherAck);
             unsigned char reply[5] = {0xAA, 0x00, 0x00, 0x00, 0x00};
             ToMainHigh_sendmsg(5, MSGT_SLAVE_RCV, reply);
-        } else if(ic_ptr->buffer[0] == 0xAB){
+        } else if(ic_ptr->buffer[0] == 0xAB){ //Gather Check
             int msgtype;
             unsigned char sensorData[5];
             unsigned char noData[5] = {0x00,0x00,0x00,0x00,0x00};
-            FromMainLow_recvmsg(length, (unsigned char *)&msgtype, sensorData);
+            length = FromMainLow_recvmsg(MAXUARTBUF, (unsigned char *)&msgtype, sensorData);
             if(length == 5 && msgtype == MSGT_UART_DATA)
                 start_i2c_slave_reply(length, sensorData);
             else
                 start_i2c_slave_reply(5, noData);
+        } else if(ic_ptr->buffer[0] == 0xBA){ //Movement Command
+           length = 5;
+           unsigned char movecomAck[3] = {0x02, 0x01, 0x01};
+           start_i2c_slave_reply(length, movecomAck);
+           ToMainHigh_sendmsg(5, MSGT_SLAVE_RCV, ic_ptr->buffer);
         }
         msg_to_send = 0;
     }

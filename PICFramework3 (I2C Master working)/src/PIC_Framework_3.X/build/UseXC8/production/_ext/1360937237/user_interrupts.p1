@@ -1,9 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "121 C:\Program Files (x86)\Microchip\xc8\v1.30\include\plib\timers.h
 [v _WriteTimer0 `(v ~T0 @X0 0 ef1`ui ]
-"2016 C:\Program Files (x86)\Microchip\xc8\v1.30\include\plib\adc.h
-[v _ConvertADC `(v ~T0 @X0 0 ef ]
-"239 C:\Program Files (x86)\Microchip\xc8\v1.30\include\plib\timers.h
+"239
 [v _WriteTimer1 `(v ~T0 @X0 0 ef1`ui ]
 "5877 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
@@ -4592,17 +4590,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 19: unsigned char cur_write_ind;
 [; ;messages.h: 20: unsigned char cur_read_ind;
 [; ;messages.h: 21: } msg_queue;
-[; ;messages.h: 43: void init_queues(void);
-[; ;messages.h: 47: void SleepIfOkay(void);
-[; ;messages.h: 51: void block_on_To_msgqueues(void);
-[; ;messages.h: 57: signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 58: signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 64: signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 65: signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 71: signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 72: signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
+"23 ../src/messages.h
+[v _uartTimeOut `ui ~T0 @X0 1 e ]
+[; ;messages.h: 23: unsigned int uartTimeOut;
+[; ;messages.h: 45: void init_queues(void);
+[; ;messages.h: 49: void SleepIfOkay(void);
+[; ;messages.h: 53: void block_on_To_msgqueues(void);
+[; ;messages.h: 59: signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 60: signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 66: signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 67: signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 73: signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 74: signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 80: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 81: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_uart.h: 10: typedef struct __uart_comm {
 [; ;my_uart.h: 11: unsigned char buffer[5];
 [; ;my_uart.h: 12: unsigned char buflen;
@@ -4648,9 +4649,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;user_interrupts.c: 17: WriteTimer0(0);
 "17
 [e ( _WriteTimer0 (1 -> -> 0 `i `ui ]
-[; ;user_interrupts.c: 34: ConvertADC();
-"34
-[e ( _ConvertADC ..  ]
+[; ;user_interrupts.c: 33: uartTimeOut++;
+"33
+[e ++ _uartTimeOut -> -> 1 `i `ui ]
 [; ;user_interrupts.c: 41: }
 "41
 [e :UE 585 ]

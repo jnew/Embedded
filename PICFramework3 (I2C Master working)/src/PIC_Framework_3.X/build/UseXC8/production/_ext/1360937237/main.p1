@@ -29,7 +29,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _init_i2c `(v ~T0 @X0 0 ef1`*S585 ]
 "6 ../src/timer1_thread.h
 [v _init_timer1_lthread `(v ~T0 @X0 0 ef1`*S587 ]
-"43 ../src/messages.h
+"45 ../src/messages.h
 [v _init_queues `(v ~T0 @X0 0 ef ]
 "2722 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
 [v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
@@ -91,20 +91,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _OpenADC `(v ~T0 @X0 0 ef3`uc`uc`uc ]
 "2084
 [v _SetChanADC `(v ~T0 @X0 0 ef1`uc ]
-"51 ../src/messages.h
+"53 ../src/messages.h
 [v _block_on_To_msgqueues `(v ~T0 @X0 0 ef ]
-"65
+"67
 [v _ToMainHigh_recvmsg `(c ~T0 @X0 0 ef3`uc`*uc`*v ]
 "6 ../src/timer0_thread.h
 [v _timer0_lthread `(i ~T0 @X0 0 ef4`*S588`i`i`*uc ]
 "21 ../src/my_uart.h
 [v _uart_trans `(v ~T0 @X0 0 ef2`uc`*uc ]
-"58 ../src/messages.h
+"60 ../src/messages.h
 [v _ToMainLow_recvmsg `(c ~T0 @X0 0 ef3`uc`*uc`*v ]
 "7 ../src/timer1_thread.h
 [v _timer1_lthread `(i ~T0 @X0 0 ef4`*S587`i`i`*uc ]
-"71 ../src/messages.h
-[v _FromMainLow_sendmsg `(c ~T0 @X0 0 ef3`uc`uc`*v ]
 [s S148 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S148 . LATB0 LATB1 LATB2 LATB3 LATB4 LATB5 LATB6 LATB7 ]
 [s S149 :1 `uc 1 ]
@@ -127,6 +125,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S147 . . . . . . . . . . ]
 "2113 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
 [v _LATBbits `VS147 ~T0 @X0 0 e@3978 ]
+"73 ../src/messages.h
+[v _FromMainLow_sendmsg `(c ~T0 @X0 0 ef3`uc`uc`*v ]
 [; ;htc.h: 22: extern void __builtin_software_breakpoint(void);
 [; ;pic18f45j10.h: 44: extern volatile unsigned char PORTA @ 0xF80;
 "46 C:\Program Files (x86)\Microchip\xc8\v1.30\include\pic18f45j10.h
@@ -4744,17 +4744,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 19: unsigned char cur_write_ind;
 [; ;messages.h: 20: unsigned char cur_read_ind;
 [; ;messages.h: 21: } msg_queue;
-[; ;messages.h: 43: void init_queues(void);
-[; ;messages.h: 47: void SleepIfOkay(void);
-[; ;messages.h: 51: void block_on_To_msgqueues(void);
-[; ;messages.h: 57: signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 58: signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 64: signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 65: signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 71: signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 72: signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
+"23 ../src/messages.h
+[v _uartTimeOut `ui ~T0 @X0 1 e ]
+[; ;messages.h: 23: unsigned int uartTimeOut;
+[; ;messages.h: 45: void init_queues(void);
+[; ;messages.h: 49: void SleepIfOkay(void);
+[; ;messages.h: 53: void block_on_To_msgqueues(void);
+[; ;messages.h: 59: signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 60: signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 66: signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 67: signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 73: signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 74: signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 80: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 81: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_uart.h: 10: typedef struct __uart_comm {
 [; ;my_uart.h: 11: unsigned char buffer[5];
 [; ;my_uart.h: 12: unsigned char buflen;
@@ -4944,8 +4947,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 358: SetChanADC(0b10001111);
 "358
 [e ( _SetChanADC (1 -> -> 143 `i `uc ]
-[v F5211 `uc ~T0 @X0 -> 2 `i s ]
-[i F5211
+[v F5212 `uc ~T0 @X0 -> 2 `i s ]
+[i F5212
 :U ..
 "369
 -> -> 1 `i `uc
@@ -4954,7 +4957,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _msg `uc ~T0 @X0 -> 2 `i a ]
 [; ;main.c: 369: unsigned char msg[2] = {0x01, 0x02};
-[e = _msg F5211 ]
+[e = _msg F5212 ]
 [; ;main.c: 377: while (1) {
 "377
 [e :U 591 ]
@@ -5142,41 +5145,44 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 454: {
 "454
 {
-[; ;main.c: 455: if(msgbuffer[0] == 0x01){
+[; ;main.c: 455: LATBbits.LATB2 = 1;
 "455
-[e $ ! == -> *U + &U _msgbuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _msgbuffer `ui `ux `i -> 1 `i 613  ]
+[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 456: if(1){
+"456
+[e $ ! != -> 1 `i -> 0 `i 613  ]
 {
-[; ;main.c: 457: FromMainLow_sendmsg(length, 31, msgbuffer);
-"457
-[e ( _FromMainLow_sendmsg (3 , , -> _length `uc -> -> 31 `i `uc -> &U _msgbuffer `*v ]
+[; ;main.c: 458: FromMainLow_sendmsg(length, 31, msgbuffer);
 "458
+[e ( _FromMainLow_sendmsg (3 , , -> _length `uc -> -> 31 `i `uc -> &U _msgbuffer `*v ]
+"459
 }
 [e :U 613 ]
-[; ;main.c: 458: }
-[; ;main.c: 460: LATBbits.LATB2 = 0;
-"460
+[; ;main.c: 459: }
+[; ;main.c: 461: LATBbits.LATB2 = 0;
+"461
 [e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 462: break;
-"462
-[e $U 608  ]
+[; ;main.c: 463: break;
 "463
-}
-[; ;main.c: 463: };
-[; ;main.c: 464: default:
-"464
-[e :U 614 ]
-[; ;main.c: 465: {
-"465
-{
-[; ;main.c: 467: break;
-"467
 [e $U 608  ]
-"468
+"464
 }
-[; ;main.c: 468: };
+[; ;main.c: 464: };
+[; ;main.c: 465: default:
+"465
+[e :U 614 ]
+[; ;main.c: 466: {
+"466
+{
+[; ;main.c: 468: break;
+"468
+[e $U 608  ]
 "469
 }
 [; ;main.c: 469: };
+"470
+}
+[; ;main.c: 470: };
 [e $U 608  ]
 "446
 [e :U 609 ]
@@ -5184,20 +5190,20 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> -> 30 `i `uc 611
  , $ -> -> 31 `i `uc 612
  614 ]
-"469
-[e :U 608 ]
 "470
+[e :U 608 ]
+"471
 }
 [e :U 607 ]
-"471
+"472
 }
 [e :U 590 ]
 "377
 [e $U 591  ]
 [e :U 592 ]
-[; ;main.c: 470: }
 [; ;main.c: 471: }
-[; ;main.c: 473: }
-"473
+[; ;main.c: 472: }
+[; ;main.c: 474: }
+"474
 [e :UE 589 ]
 }

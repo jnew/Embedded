@@ -43,7 +43,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _i2c_int_handler `(v ~T0 @X0 0 ef ]
 "10 ../src/user_interrupts.h
 [v _timer0_int_handler `(v ~T0 @X0 0 ef ]
-"47 ../src/messages.h
+"49 ../src/messages.h
 [v _SleepIfOkay `(v ~T0 @X0 0 ef ]
 "14 ../src/user_interrupts.h
 [v _adc_int_handler `(v ~T0 @X0 0 ef ]
@@ -4643,17 +4643,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;messages.h: 19: unsigned char cur_write_ind;
 [; ;messages.h: 20: unsigned char cur_read_ind;
 [; ;messages.h: 21: } msg_queue;
-[; ;messages.h: 43: void init_queues(void);
-[; ;messages.h: 47: void SleepIfOkay(void);
-[; ;messages.h: 51: void block_on_To_msgqueues(void);
-[; ;messages.h: 57: signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 58: signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 64: signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 65: signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 71: signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 72: signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
-[; ;messages.h: 78: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
-[; ;messages.h: 79: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
+"23 ../src/messages.h
+[v _uartTimeOut `ui ~T0 @X0 1 e ]
+[; ;messages.h: 23: unsigned int uartTimeOut;
+[; ;messages.h: 45: void init_queues(void);
+[; ;messages.h: 49: void SleepIfOkay(void);
+[; ;messages.h: 53: void block_on_To_msgqueues(void);
+[; ;messages.h: 59: signed char ToMainLow_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 60: signed char ToMainLow_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 66: signed char ToMainHigh_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 67: signed char ToMainHigh_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 73: signed char FromMainLow_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 74: signed char FromMainLow_recvmsg(unsigned char,unsigned char *,void *);
+[; ;messages.h: 80: signed char FromMainHigh_sendmsg(unsigned char,unsigned char,void *);
+[; ;messages.h: 81: signed char FromMainHigh_recvmsg(unsigned char,unsigned char *,void *);
 [; ;my_uart.h: 10: typedef struct __uart_comm {
 [; ;my_uart.h: 11: unsigned char buffer[5];
 [; ;my_uart.h: 12: unsigned char buflen;
@@ -4813,9 +4816,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "47
 [e :UE 593 ]
 }
-[v F5116 `(v ~T0 @X0 1 tf ]
+[v F5117 `(v ~T0 @X0 1 tf ]
 "84
-[v _InterruptHandlerHigh `IF5116 ~T0 @X0 1 e ]
+[v _InterruptHandlerHigh `IF5117 ~T0 @X0 1 e ]
 {
 [; ;interrupts.c: 79: interrupt
 [; ;interrupts.c: 84: void InterruptHandlerHigh() {
@@ -4856,9 +4859,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "114
 [e :UE 596 ]
 }
-[v F5118 `(v ~T0 @X0 1 tf ]
+[v F5119 `(v ~T0 @X0 1 tf ]
 "126
-[v _InterruptHandlerLow `ILF5118 ~T0 @X0 1 e ]
+[v _InterruptHandlerLow `ILF5119 ~T0 @X0 1 e ]
 {
 [; ;interrupts.c: 121: interrupt low_priority
 [; ;interrupts.c: 126: void InterruptHandlerLow() {
