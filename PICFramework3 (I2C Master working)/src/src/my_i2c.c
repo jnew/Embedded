@@ -404,20 +404,25 @@ void i2c_slave_int_handler() {
         ic_ptr->error_count = 0;
     }
     if (msg_to_send) {
-        int length = 0;
+        unsigned char length = 0;
         
         // send to the queue to *ask* for the data to be sent out
         //ToMainHigh_sendmsg(0, MSGT_I2C_RQST, (void *) ic_ptr->buffer);
         if(ic_ptr->buffer[0] == 0xAA){
-            length = 5;
-            unsigned char sensormsg[5] = {0x01, 0x01, 0x02, 0x03, 0x07};
-            start_i2c_slave_reply(length, sensormsg);
-            //adcbuffer[0] = 0; // reset count after send
-        } else if(ic_ptr->buffer[0] == 0xBA){
-            // motor stuff
-            length = 5;
-            unsigned char motormsg[5] = {0x02, 0x03, 0x04, 0x09};
-            start_i2c_slave_reply(length, ic_ptr->buffer);
+            length = 3;
+            unsigned char gatherAck[3] = {0x00, 0x01, 0x01};
+            start_i2c_slave_reply(length, gatherAck);
+            unsigned char reply[5] = {0xAA, 0x00, 0x00, 0x00, 0x00};
+            ToMainHigh_sendmsg(5, MSGT_SLAVE_RCV, reply);
+        } else if(ic_ptr->buffer[0] == 0xAB){
+            int msgtype;
+            unsigned char sensorData[5];
+            unsigned char noData[5] = {0x00,0x00,0x00,0x00,0x00};
+            FromMainLow_recvmsg(length, (unsigned char *)&msgtype, sensorData);
+            if(length == 5 && msgtype == MSGT_UART_DATA)
+                start_i2c_slave_reply(length, sensorData);
+            else
+                start_i2c_slave_reply(5, noData);
         }
         msg_to_send = 0;
     }

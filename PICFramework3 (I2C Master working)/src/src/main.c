@@ -297,6 +297,9 @@ void main(void) {
 #ifdef MOTORPIC
     i2c_configure_slave(0xBE); // slave addr 5F
 #endif
+#ifdef ARMPIC
+    i2c_configure_slave(0x9E); //4F
+#endif
 #endif
 #endif
     
@@ -370,6 +373,7 @@ void main(void) {
       //uart_trans(2, msg);
       //WriteUSART(0xAA);
 
+
     while (1) {
         // Call a routine that blocks until either on the incoming
         // messages queues has a message (this may put the processor into
@@ -418,6 +422,11 @@ void main(void) {
                     //LATBbits.LATB2 = 0;
                     break;
                 };
+                case MSGT_SLAVE_RCV:
+                {
+                    uart_trans(length, msgbuffer);
+                    break;
+                };
                 default:
                 {
                     // Your code should handle this error
@@ -443,12 +452,9 @@ void main(void) {
                 case MSGT_OVERRUN:
                 case MSGT_UART_DATA:
                 {
-                    if(msgbuffer[0] == 0xBA){
+                    if(msgbuffer[0] == 0x01){
                         // motor command
-                        i2c_master_send(5, 5, msgbuffer, 0xBE);
-                    } else if(msgbuffer[0] == 0xAA){
-                        // sensor command
-                        i2c_master_send(1, 5, msgbuffer, 0x9E);
+                        FromMainLow_sendmsg(length, MSGT_UART_DATA, msgbuffer);
                     }
                     
                     LATBbits.LATB2 = 0;

@@ -6100,9 +6100,10 @@ ic_ptr->status = 0x6;
 # 139
 void i2c_int_handler(){
 
-i2c_master_int_handler();
 
-# 145
+
+i2c_slave_int_handler();
+
 }
 
 void i2c_master_int_handler() {
@@ -6365,20 +6366,25 @@ ToMainHigh_sendmsg(sizeof (unsigned char) *3, 41, (void *) error_buf);
 ic_ptr->error_count = 0;
 }
 if (msg_to_send) {
-int length = 0;
+unsigned char length = 0;
 
 
 
 if(ic_ptr->buffer[0] == 0xAA){
-length = 5;
-unsigned char sensormsg[5] = {0x01, 0x01, 0x02, 0x03, 0x07};
-start_i2c_slave_reply(length, sensormsg);
-
-} else if(ic_ptr->buffer[0] == 0xBA){
-
-length = 5;
-unsigned char motormsg[5] = {0x02, 0x03, 0x04, 0x09};
-start_i2c_slave_reply(length, ic_ptr->buffer);
+length = 3;
+unsigned char gatherAck[3] = {0x00, 0x01, 0x01};
+start_i2c_slave_reply(length, gatherAck);
+unsigned char reply[5] = {0xAA, 0x00, 0x00, 0x00, 0x00};
+ToMainHigh_sendmsg(5, 32, reply);
+} else if(ic_ptr->buffer[0] == 0xAB){
+int msgtype;
+unsigned char sensorData[5];
+unsigned char noData[5] = {0x00,0x00,0x00,0x00,0x00};
+FromMainLow_recvmsg(length, (unsigned char *)&msgtype, sensorData);
+if(length == 5 && msgtype == 31)
+start_i2c_slave_reply(length, sensorData);
+else
+start_i2c_slave_reply(5, noData);
 }
 msg_to_send = 0;
 }
@@ -6400,7 +6406,7 @@ ic_ptr->error_count = 0;
 
 void i2c_configure_slave(unsigned char addr) {
 
-# 452
+# 457
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
 
@@ -6419,7 +6425,7 @@ SSPSTAT |= 0b10000000;
 TRISCbits.TRISC3 = 1;
 TRISCbits.TRISC4 = 1;
 
-# 489
+# 494
 SSPCON2bits.SEN = 1;
 SSPCON1 |= 0b00100000;
 

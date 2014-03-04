@@ -6169,38 +6169,38 @@ IPR1bits.TXIP = 0;
 
 IPR1bits.SSPIP = 1;
 
-# 292
-i2c_configure_master();
+# 301
+i2c_configure_slave(0x9E);
 
-# 317
+# 320
 PIE1bits.SSPIE = 1;
 
-# 328
+# 331
 OpenUSART(0b11111111 & 0b11111111 & 0b11111110 & 0b11111101 &
 0b11111111 & 0b11111111, 38);
 RCSTAbits.SPEN = 1;
 TRISC = 0xFF;
 
-# 338
+# 341
 enable_interrupts();
 
-# 352
+# 355
 OpenADC(0b11011111 & 0b01111111 & 0b11110011,
 0b10001111 & 0b01111111 & 0b11111110 & 0b11111101,
 0b1011);
 SetChanADC(0b10001111);
 
-# 366
+# 369
 unsigned char msg[2] = {0x01, 0x02};
 
-# 373
+# 377
 while (1) {
 
 
 
 block_on_To_msgqueues();
 
-# 384
+# 388
 length = ToMainHigh_recvmsg(10, &msgtype, (void *) msgbuffer);
 if (length < 0) {
 
@@ -6238,6 +6238,11 @@ case 46:
 
 break;
 };
+case 32:
+{
+uart_trans(length, msgbuffer);
+break;
+};
 default:
 {
 
@@ -6263,12 +6268,9 @@ break;
 case 30:
 case 31:
 {
-if(msgbuffer[0] == 0xBA){
+if(msgbuffer[0] == 0x01){
 
-i2c_master_send(5, 5, msgbuffer, 0xBE);
-} else if(msgbuffer[0] == 0xAA){
-
-i2c_master_send(1, 5, msgbuffer, 0x9E);
+FromMainLow_sendmsg(length, 31, msgbuffer);
 }
 
 LATBbits.LATB2 = 0;
