@@ -6271,11 +6271,7 @@ case 30:
 case 31:
 {
 LATBbits.LATB2 = 1;
-if(1){
-
 FromMainLow_sendmsg(length, 31, msgbuffer);
-}
-
 LATBbits.LATB2 = 0;
 
 break;

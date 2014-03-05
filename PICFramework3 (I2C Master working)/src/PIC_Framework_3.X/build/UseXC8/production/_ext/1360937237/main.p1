@@ -5148,62 +5148,54 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 455: LATBbits.LATB2 = 1;
 "455
 [e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 456: if(1){
+[; ;main.c: 456: FromMainLow_sendmsg(length, 31, msgbuffer);
 "456
-[e $ ! != -> 1 `i -> 0 `i 613  ]
-{
-[; ;main.c: 458: FromMainLow_sendmsg(length, 31, msgbuffer);
-"458
 [e ( _FromMainLow_sendmsg (3 , , -> _length `uc -> -> 31 `i `uc -> &U _msgbuffer `*v ]
-"459
-}
-[e :U 613 ]
-[; ;main.c: 459: }
-[; ;main.c: 461: LATBbits.LATB2 = 0;
-"461
+[; ;main.c: 457: LATBbits.LATB2 = 0;
+"457
 [e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 463: break;
-"463
+[; ;main.c: 459: break;
+"459
 [e $U 608  ]
-"464
+"460
 }
-[; ;main.c: 464: };
-[; ;main.c: 465: default:
-"465
-[e :U 614 ]
-[; ;main.c: 466: {
-"466
+[; ;main.c: 460: };
+[; ;main.c: 461: default:
+"461
+[e :U 613 ]
+[; ;main.c: 462: {
+"462
 {
-[; ;main.c: 468: break;
-"468
+[; ;main.c: 464: break;
+"464
 [e $U 608  ]
-"469
+"465
 }
-[; ;main.c: 469: };
-"470
+[; ;main.c: 465: };
+"466
 }
-[; ;main.c: 470: };
+[; ;main.c: 466: };
 [e $U 608  ]
 "446
 [e :U 609 ]
 [e [\ _msgtype , $ -> -> 11 `i `uc 610
  , $ -> -> 30 `i `uc 611
  , $ -> -> 31 `i `uc 612
- 614 ]
-"470
+ 613 ]
+"466
 [e :U 608 ]
-"471
+"467
 }
 [e :U 607 ]
-"472
+"468
 }
 [e :U 590 ]
 "377
 [e $U 591  ]
 [e :U 592 ]
-[; ;main.c: 471: }
-[; ;main.c: 472: }
-[; ;main.c: 474: }
-"474
+[; ;main.c: 467: }
+[; ;main.c: 468: }
+[; ;main.c: 470: }
+"470
 [e :UE 589 ]
 }

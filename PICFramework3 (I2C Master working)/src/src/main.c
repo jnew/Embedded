@@ -453,11 +453,7 @@ void main(void) {
                 case MSGT_UART_DATA:
                 {
                     LATBbits.LATB2 = 1;
-                    if(1){
-                        // motor command
-                        FromMainLow_sendmsg(length, MSGT_UART_DATA, msgbuffer);
-                    }
-                    
+                    FromMainLow_sendmsg(length, MSGT_UART_DATA, msgbuffer);
                     LATBbits.LATB2 = 0;
                     //uart_lthread(&uthread_data, msgtype, length, msgbuffer);
                     break;
